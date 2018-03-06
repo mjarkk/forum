@@ -1,5 +1,12 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// js imports
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
+// component imports
+import List from './componenets/list.js'
+
+// style imports
+import style from '../stylus/style.styl'
 
 const log = console.log
 
@@ -12,11 +19,20 @@ class App extends Component {
   }
   render() {
     return (
-      <h1>{this.state.title}</h1>
+      <div className="mainApp">
+        <div className="header">
+          <h1>{this.state.title}</h1>
+          <div>
+            
+          </div>
+        </div>
+        <div>
+          <List/>
+        </div>
+      </div>
+      
     )
   }
 }
-
-// export default App;
 
 ReactDOM.render(<App/>, document.getElementById('root'));

@@ -2,7 +2,9 @@ const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-var htmlMinifier = require('html-minifier').minify
+const htmlMinifier = require('html-minifier').minify
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 const production = false
 
@@ -50,7 +52,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
+    new FriendlyErrorsWebpackPlugin(),
+    new LiveReloadPlugin({}),
     new HtmlWebpackPlugin({
+      production: production,
       title: 'Forum',
       minify: htmlMinifier,
       inject: 'body',
