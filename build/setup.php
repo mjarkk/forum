@@ -7,7 +7,7 @@
 </head>
 <body>
   <?php
-    // index here
+    // setup here
   ?>
 </body>
 </html>
