@@ -60,3 +60,4 @@ typings/
 # Added myself
 build/js/*
 build/style/*
+build/**/*.html
