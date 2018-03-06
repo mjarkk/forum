@@ -1,5 +1,6 @@
 # Forum
-Make a forum as school project
+Make a forum as school project using javascript and PHP.  
+I have added React to this project myself to learn a bit :D
 
 ## PHP Setup
 Make a softlink from build to you'r webserver
