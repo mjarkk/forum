@@ -20,3 +20,6 @@ Make a softlink from build to you'r webserver
 - FILE `package.json`: Contains the packages and scripts for webpack
 - FILE `webpack.config.js`: The webpack config
 - FILE `yarn.lock`: The package lock file created by yarn
+
+## Maybe?
+- Add docker setup file
