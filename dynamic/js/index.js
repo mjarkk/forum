@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      title: 'test'
+      title: 'forum'
     }
   }
   render() {
@@ -23,9 +23,7 @@ class App extends Component {
         <div className="header">
           <h1>{this.state.title}</h1>
         </div>
-        <div className="ItemsList">
-          <List/>
-        </div>
+        <List />
       </div>
     )
   }

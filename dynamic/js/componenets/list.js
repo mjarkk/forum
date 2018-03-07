@@ -10,7 +10,9 @@ class List extends Component {
   render() {
     return (
       <div className="mainList">
-        list item
+        <div className="title">
+          <h2>Oww title</h2>
+        </div>
       </div>
     )
   }
