@@ -4,7 +4,7 @@ class List extends Component {
   constructor() {
     super()
     this.state = {
-      title: 'test'
+      
     }
   }
   render() {

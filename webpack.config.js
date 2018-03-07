@@ -14,10 +14,10 @@ let pathsToClean = [
 ]
 
 let cleanOptions = {
-  root:     path.resolve(__dirname, './build/'),
-  exclude:  [],
-  verbose:  true,
-  dry:      false
+  root: path.resolve(__dirname, './build/'),
+  exclude: [],
+  verbose: true,
+  dry: false
 }
 
 module.exports = {

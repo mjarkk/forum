@@ -22,15 +22,11 @@ class App extends Component {
       <div className="mainApp">
         <div className="header">
           <h1>{this.state.title}</h1>
-          <div>
-            
-          </div>
         </div>
-        <div>
+        <div className="ItemsList">
           <List/>
         </div>
       </div>
-      
     )
   }
 }
