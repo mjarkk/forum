@@ -8,9 +8,9 @@ header('Content-type:application/json;charset=utf-8');
 
 // this array contains info about the server
 $report = array(
-  'SQL' => True,
-  'DB' => True,
-  'ENV' => True
+  'SQL' => False,
+  'DB' => False,
+  'ENV' => False
 );
 
 // return server status
@@ -19,13 +19,12 @@ function returnStatus () {
     try {
       $GLOBALS['pdo']->query("SELECT * FROM users LIMIT 1");
       $GLOBALS['report']['Tabel and database'] = 'Tabel and database exsist';
+      $GLOBALS['report']['DB'] = True;
     } catch (Exception $e) {
       $GLOBALS['report']['Tabel and database'] = 'Tabel and/or database are not exsisting, ERROR:' . $e->getMessage();
-      $GLOBALS['report']['DB'] = False;
     }
   } else {
     $GLOBALS['report']['Tabel and database'] = 'Tabel and/or database are not exsisting';
-    $GLOBALS['report']['DB'] = False;
   }
   return $GLOBALS['report'];
 }
@@ -40,11 +39,12 @@ if ($env['SQLusername'] == '' && $env['SQLpassword'] == '' && file_exists($envFi
   }
   fclose($envF);
   $report['env'] = 'env.php is not filled in, using .env file';
+  $report['ENV'] = True;
 } elseif ($env['SQLusername'] == '' && $env['SQLpassword'] == '') {
   $report['env'] = 'env.php is not filled in no .env file found as alternative';
-  $report['ENV'] = False;
 } else {
   $report['env'] = 'using env.php data';
+  $report['ENV'] = True;
 }
 
 if ($report['ENV'] == True) {
@@ -53,11 +53,10 @@ if ($report['ENV'] == True) {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $GLOBALS['pdo'] = $pdo;
     $GLOBALS['report']['Sql Connection'] = 'connected to database';
+    $GLOBALS['report']['SQL'] = True;
   } catch(PDOException $e) {
     $GLOBALS['report']['Sql Connection'] = "Connection failed, ERROR:" . $e->getMessage();
-    $GLOBALS['report']['SQL'] = False;
   }
 } else {
   $GLOBALS['report']['Sql Connection'] = "Can't connect to SQL without login data";
-  $GLOBALS['report']['SQL'] = False;
 }
