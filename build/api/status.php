@@ -2,4 +2,4 @@
 include_once './imports.php';
 // this file reports errors
 
-echo json_encode($report);
+echo json_encode(returnStatus());
