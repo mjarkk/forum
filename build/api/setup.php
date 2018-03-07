@@ -45,26 +45,42 @@ function CreateTables() {
 
         $db = $GLOBALS['pdo'];
 
-        $exsecute = False;
-        try {
-          $db->prepare("select 1 from ". $key)->execute();
-        } catch (Exception $err) {
-          $exsecute = True;
-        }
+        // check if the tables are already created
+        $exsecute = SQLfetch("select 1 from ". $key)['status'];
 
-        if ($exsecute == True) {
-          $db->prepare("
+        if ($exsecute == False) {
+          // create the table
+          SQLfetch("
             CREATE TABLE " . $key . " (
               " . $SQLSTRING . "
-              ID int NOT NULL,
+              ID int NOT NULL AUTO_INCREMENT,
               PRIMARY KEY (ID)
             );
-          ")->execute();
+          ");
 
-          $db->prepare("
+          // add the primary key
+          SQLfetch("
             ALTER TABLE ". $key ." ADD PRIMARY KEY(ID);
-          ")->execute();
+          ");
         }
+
+      }
+      try {
+        $result = SQLfetch("
+          SELECT COUNT(ID) AS 'count'
+          FROM list
+        ")['data'];
+        $count = $result[0]['count'];
+        if ($count == 0) {
+          // add a the `home` forum list
+          SQLfetch("
+            INSERT INTO `list` 
+            (`premission`, `name`, `inList`, `premissionToCreate`) 
+            VALUES 
+            ('1', 'home', 'defualt', '1')
+          ");
+        }
+      } catch (Exception $err) {
 
       }
       return array('status' => True);
@@ -76,4 +92,8 @@ function CreateTables() {
   }
 }
 
-echo json_encode(CreateTables());
+$data = CreateTables();
+
+echo json_encode($data);
+
+// todo: add user from filledin env data if there is no user

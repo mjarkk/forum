@@ -17,7 +17,7 @@ $report = array(
 function returnStatus () {
   if ($GLOBALS['report']['SQL'] == True) {
     try {
-      $GLOBALS['pdo']->query("SELECT * FROM users LIMIT 1");
+      $GLOBALS['pdo']->exec("SELECT * FROM users LIMIT 1");
       $GLOBALS['report']['Tabel and database'] = 'Tabel and database exsist';
       $GLOBALS['report']['DB'] = True;
     } catch (Exception $e) {
@@ -59,4 +59,23 @@ if ($report['ENV'] == True) {
   }
 } else {
   $GLOBALS['report']['Sql Connection'] = "Can't connect to SQL without login data";
+}
+
+// reqest something from the db
+// returns: 
+// array(
+//   'status' => {{ True OR False ( is false when execution failed ) }},
+//   'data' => {{ array (data from db) }}
+// )
+function SQLfetch ($query) {
+  try {
+    $db = $GLOBALS['pdo'];
+    $dbFetch = $db->prepare($query);
+    $dbFetch->execute();
+    $dbFetch->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $dbFetch->fetchAll();
+    return array('status' => True, 'data' => $result);
+  } catch(PDOException $e) {
+    return array('status' => False, 'why' => $e->getMessage());
+  }
 }
