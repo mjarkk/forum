@@ -4,7 +4,6 @@
 include_once './imports.php';
 
 function CreateTables() {
-  $db = $GLOBALS['pdo'];
   $toCreate = array(
     'votes' => array(
       'postID' => 'int',
@@ -44,9 +43,11 @@ function CreateTables() {
           $SQLSTRING = $SQLSTRING . $DbRowName . ' ' . $type . ', ';
         }
 
+        $db = $GLOBALS['pdo'];
+
         $exsecute = False;
         try {
-          $db->prepare("select 1 from your_table")->execute();
+          $db->prepare("select 1 from ". $key)->execute();
         } catch (Exception $err) {
           $exsecute = True;
         }
