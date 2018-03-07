@@ -2,5 +2,7 @@
 
 $env = array(
   'SQLusername' => '',
-  'SQLpassword' => ''
+  'SQLpassword' => '',
+  'SQLserver' => 'localhost',
+  'SQLdatabaseName' => 'forum'
 );
