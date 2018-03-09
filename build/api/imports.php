@@ -1,5 +1,6 @@
 <?php
-include_once './env.php';
+include_once dirname(__FILE__) . '/env.php';
+include_once dirname(__FILE__) . '/functions/pbkdf2.php';
 
 $pdo = null;
 
@@ -30,7 +31,7 @@ function returnStatus () {
 }
 
 // if the varialbes are not defined try to use a .env file
-$envFile = './.env';
+$envFile = dirname(__FILE__) . '/.env';
 if ($env['SQLusername'] == '' && $env['SQLpassword'] == '' && file_exists($envFile)) {
   $envF = fopen($envFile, "r");
   $envContents = json_decode(fread($envF,filesize($envFile)));
@@ -67,15 +68,44 @@ if ($report['ENV'] == True) {
 //   'status' => {{ True OR False ( is false when execution failed ) }},
 //   'data' => {{ array (data from db) }}
 // )
-function SQLfetch ($query) {
-  try {
-    $db = $GLOBALS['pdo'];
-    $dbFetch = $db->prepare($query);
-    $dbFetch->execute();
-    $dbFetch->setFetchMode(PDO::FETCH_ASSOC);
-    $result = $dbFetch->fetchAll();
-    return array('status' => True, 'data' => $result);
-  } catch(PDOException $e) {
-    return array('status' => False, 'why' => $e->getMessage());
+function SQLfetch ($query, $exData = array()) {
+  if ($GLOBALS['report']['SQL'] == True) {
+    try {
+      $db = $GLOBALS['pdo'];
+      $dbFetch = $db->prepare($query);
+      $dbFetch->execute($exData);
+      $dbFetch->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $dbFetch->fetchAll();
+      return array('status' => True, 'data' => $result);
+    } catch(PDOException $e) {
+      return array('status' => False, 'why' => $e->getMessage());
+    }
+  } else {
+    return array('status' => False, 'why' => 'No SQL credentials or SQL credentials are wrong');
   }
+}
+
+// get a random string to use as salt
+function getSalt() {
+  $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  $randStringLen = 64;
+  $randString = "";
+  for ($i = 0; $i < $randStringLen; $i++) {
+    $randString .= $charset[mt_rand(0, strlen($charset) - 1)];
+  }
+  return $randString;
+}
+
+
+// create user to database
+function createUser ($username, $password, $premissions = '1') {
+  $salt = getSalt();
+  $hash = pbkdf2("sha256", $password, $salt, 500, 100);
+  SQLfetch("
+    INSERT INTO `users` 
+    (`password`, `salt`, `username`, `premission`)
+    VALUES 
+    (:hash, :salt, :username, :premissions)
+  ", array(':hash' => $hash, ':salt' => $salt, ':username' => $username, ':premissions' => $premissions));
+  return (true);
 }

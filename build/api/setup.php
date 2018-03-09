@@ -65,35 +65,36 @@ function CreateTables() {
         }
 
       }
-      try {
-        $result = SQLfetch("
-          SELECT COUNT(ID) AS 'count'
-          FROM list
-        ")['data'];
-        $count = $result[0]['count'];
-        if ($count == 0) {
-          // add a the `home` forum list
-          SQLfetch("
-            INSERT INTO `list` 
-            (`premission`, `name`, `inList`, `premissionToCreate`) 
-            VALUES 
-            ('1', 'home', 'defualt', '1')
-          ");
-        }
-      } catch (Exception $err) {
-
+      $result = SQLfetch("
+        SELECT COUNT(ID) AS 'count'
+        FROM list
+      ")['data'];
+      if ($result[0]['count'] == 0) {
+        // add a the `home` forum list
+        SQLfetch("
+          INSERT INTO `list` 
+          (`premission`, `name`, `inList`, `premissionToCreate`) 
+          VALUES 
+          ('1', 'home', 'defualt', '1')
+        ");
+      }
+      $usersResult = SQLfetch("
+        SELECT COUNT(ID) AS 'count'
+        FROM users
+      ")['data'];
+      $userdata = False;
+      if ($usersResult[0]['count'] == 0) {
+        $userdata = createUser($GLOBALS['env']['SQLusername'], $GLOBALS['env']['SQLpassword'], '3');
       }
       return array('status' => True);
     } catch (Exception $e) {
       return array('status' => False, 'why' => $e->getMessage());
     }
   } else {
-    return array('status' => False);
+    return array('status' => False, 'why' => 'No SQL credentials or SQL credentials are wrong');
   }
 }
 
 $data = CreateTables();
 
 echo json_encode($data);
-
-// todo: add user from filledin env data if there is no user
