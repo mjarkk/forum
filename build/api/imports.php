@@ -1,6 +1,8 @@
 <?php
 include_once dirname(__FILE__) . '/env.php';
+include_once dirname(__FILE__) . '/settings.php';
 include_once dirname(__FILE__) . '/functions/pbkdf2.php';
+include_once dirname(__FILE__) . '/functions/checkuser.php';
 
 $pdo = null;
 

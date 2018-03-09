@@ -33,23 +33,62 @@ body
 .header
   background-color Primary
   padding-bottom 50px
-  box-shadow Shadow2
+  box-shadow Shadow1
   h1
     font-size 40px
     font-weight 300
     box-sizing border-box
-    padding 10px
+    padding 15px 25px
 
 .mainList 
   padding 10px
   background-color Background
-  margin 10px
   border-radius 4px
-  box-shadow Shadow1
+  box-shadow Shadow2
   position relative
-  top -50px
+  top -60px
+  width 100%
+  max-width 600px
+  box-sizing border-box
   .title
     border-bottom 2px solid #ccc
     margin-bottom 5px
     padding-bottom 5px
-  
+  .list
+    h3
+      font-size 20px
+      padding-top 5px
+      padding-bottom 5px
+    .listitem
+      cursor pointer
+      transition 0.2s background-color
+      background-color #F5F5F6
+      position relative
+      display inline-block
+      width 100%
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+      user-select none
+      -webkit-touch-callout none
+      -webkit-user-select: none
+      &:hover
+        background-color #eee
+      .itemTitle
+        font-size 23px
+      .subdata
+        display flex
+        padding-bottom 10px
+        div
+          padding-right 5px
+          font-size 15px
+          span
+            font-size 18px
+            font-weight bold
+
+.mainApp
+  .listWrapper
+    display flex 
+    justify-content center 
+    align-self center
+    padding 10px

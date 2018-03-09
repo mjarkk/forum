@@ -23,7 +23,10 @@ class App extends Component {
         <div className="header">
           <h1>{this.state.title}</h1>
         </div>
-        <List />
+        <div className="listWrapper">
+          <List />
+        </div>
+        
       </div>
     )
   }

@@ -1,8 +1,6 @@
 <?php
 // this file checks if a user has filledin the write credentials
 
-include_once '../imports.php';
-
 function checkUserLogin ($username, $password) {
   $err = array('status' => False);
   $data = SQLfetch("
