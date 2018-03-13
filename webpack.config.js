@@ -54,6 +54,9 @@ module.exports = {
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
     new FriendlyErrorsWebpackPlugin(),
     new LiveReloadPlugin({}),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': (production) ? '"production"' : '"development"'
+    }),
     new HtmlWebpackPlugin({
       production: production,
       title: 'Forum',
@@ -61,12 +64,12 @@ module.exports = {
       inject: 'body',
       hash: true,
       filename: 'index.html',
-      template: 'dynamic/index.html'
+      template: 'dynamic/index.html',
     })
   ],
   stats: {
     colors: true
   },
-  devtool: 'source-map',
+  devtool: (production) ? 'none' : 'source-map',
   mode: (production) ? 'production' : 'development'
 }

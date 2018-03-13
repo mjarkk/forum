@@ -1,9 +1,12 @@
 // js imports
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import MDface from 'react-icons/lib/md/face'
+import MDmenu from 'react-icons/lib/md/menu'
 
 // component imports
 import List from './componenets/list.js'
+import BigMenu, { menuHandeler } from './componenets/menu.js'
 
 // style imports
 import style from '../stylus/style.styl'
@@ -21,12 +24,14 @@ class App extends Component {
     return (
       <div className="mainApp">
         <div className="header">
-          <h1>{this.state.title}</h1>
+          <MDmenu onClick={(e) => {
+            menuHandeler(true)
+          }} size={35} /><h1>{this.state.title}</h1>
         </div>
         <div className="listWrapper">
           <List />
         </div>
-        
+        <BigMenu />
       </div>
     )
   }

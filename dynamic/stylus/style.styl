@@ -34,11 +34,17 @@ body
   background-color Primary
   padding-bottom 50px
   box-shadow Shadow1
+  display flex
+  align-items center
+  box-sizing border-box
+  padding 10px 10px 60px 10px
   h1
     font-size 40px
     font-weight 300
     box-sizing border-box
-    padding 15px 25px
+    padding-left 10px
+  svg
+    cursor pointer
 
 .mainList 
   padding 10px
@@ -92,3 +98,49 @@ body
     justify-content center 
     align-self center
     padding 10px
+
+.bigMenu
+  height 100vh
+  width 100vw
+  position fixed
+  top 0px
+  left 0px
+  transition 0.3s background-color
+  .actualBigMenu
+    transition 0.3s transform
+    willchange transform
+    width 90%
+    height 100vh
+    overflow-y scroll
+    overflow-x none
+    max-width 350px
+    background-color Background
+    .proviel
+      background-color Secondary
+      padding 10px 10px 30px 10px
+      *
+        color white
+      h2
+        font-size 40px
+      p
+        color rgba(100%, 100%, 100%, 0.7)
+        font-weight normal
+        span
+          font-weight bolder
+    .listLinks
+      .link
+        padding 20px 10px
+        overflow hidden
+        font-size 22px
+        display flex
+        align-item center
+        cursor pointer
+        background-color Background
+        transition 0.2s background-color
+        &:hover
+          background-color BackgroundDark
+        svg
+          position relative
+          top 1px
+          left -2px
+
