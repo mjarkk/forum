@@ -12,7 +12,7 @@ $data = SQLfetch("
   SELECT messages.*, users.username AS username 
   FROM (messages
   INNER JOIN users ON messages.userID = users.ID) 
-  WHERE inList = :list AND start = 'true' 
+  WHERE inList = :list AND start = 'true'
 ", array(
   ':list' => $_list
 ));

@@ -18,13 +18,14 @@ function CreateTables() {
         'premissionToCreate' => 'text'
       ),
       'messages' => array(
-        'message' => 'text',
-        'title' => 'text',
-        'created' => 'text',
-        'userID' => 'int',
-        'start' => 'text',
-        'premission' => 'text',
-        'inList' => 'text'
+        'message' => 'text', // the actual message
+        'title' => 'text', // the title of the post
+        'created' => 'text', // the date this post was made
+        'userID' => 'int', // the user ID that created this post
+        'start' => 'text', // was this a reaction or the post
+        'premission' => 'text', // who can eddit this message
+        'inList' => 'text', // in whitch list is this message post
+        'bindTo' => 'int' // if it's a reply bind it to ID
       ),
       'users' => array(
         'password' => 'text',
@@ -93,7 +94,7 @@ function CreateTables() {
         return array('status' => False, 'why' => $e->getMessage());
       }
     } else {
-      return array('status' => False, 'why' => 'No SQL credentials or SQL credentials are wrong');
+      return array('status' => False, 'why' => 'there are no SQL credentials or SQL credentials are wrong');
     }
   } else {
     return array('status' => False, 'why' => 'setup is disabled in the settings');
