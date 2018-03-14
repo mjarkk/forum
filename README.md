@@ -17,8 +17,9 @@ Make a softlink from build to you'r webserver
   - register
   - user settings
 - message
-  - message itself
-  - user icon
+  - message itself :heavy_check_mark:
+  - message reactions
+  - user icon 
   - react to the message
   - markdown support
   - add things to markdown
@@ -27,8 +28,10 @@ Make a softlink from build to you'r webserver
 - menu
   - make working links
 - lists
-  - messages
+  - messages :heavy_check_mark:
+  - go to message if clicked 
   - sub lists
+  - go to sub list it clicked
   - message user icon
   - save fetches to indexedDB or local storage
 - PWA

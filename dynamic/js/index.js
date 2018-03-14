@@ -7,9 +7,10 @@ import MDmenu from 'react-icons/lib/md/menu'
 // component imports
 import List from './componenets/list.js'
 import BigMenu, { menuHandeler } from './componenets/menu.js'
+import Message from './componenets/message.js'
 
 // style imports
-import style from '../stylus/style.styl'
+import '../stylus/style.styl'
 
 const log = console.log
 
@@ -32,6 +33,7 @@ class App extends Component {
           <List />
         </div>
         <BigMenu />
+        <Message />
       </div>
     )
   }

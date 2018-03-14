@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {functions} from '../imports/functions.js'
 
 const log = console.log
 
@@ -37,12 +38,7 @@ class List extends Component {
               <div className="itemTitle">{msg.title}</div>
               <div className="subdata">
                 <div>Created by <span>{msg.username}</span></div>
-                <div>Created: <span>{msg.created.split('-').map((el, i) => 
-                  (i == 1) ? // check it the item is the time
-                    el.split(':').slice(0,2).join(':') + // get the hours + minutes
-                    el.slice(-2) : // add am or pm
-                    el + ' ' // return the date with a space at the end
-                )}</span></div>
+                <div>Created: <span>{ functions.dateToString(msg.created) }</span></div>
               </div>
             </div>
           )}
