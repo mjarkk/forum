@@ -17,7 +17,7 @@ Make a softlink from build to you'r webserver
   - register
   - user settings
 - message
-  - message itself :heavy_check_mark:
+  - ~~message itself~~ :heavy_check_mark:
   - message reactions
   - user icon 
   - react to the message
@@ -28,7 +28,7 @@ Make a softlink from build to you'r webserver
 - menu
   - make working links
 - lists
-  - messages :heavy_check_mark:
+  - ~~messages~~ :heavy_check_mark:
   - go to message if clicked 
   - sub lists
   - go to sub list it clicked
