@@ -8,7 +8,6 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 const production = false
 
-
 let pathsToClean = [
   'js'
 ]
@@ -61,7 +60,7 @@ module.exports = {
       production: production,
       title: 'Forum',
       minify: htmlMinifier,
-      inject: 'body',
+      inject: false,
       hash: true,
       filename: 'index.html',
       template: 'dynamic/index.html',

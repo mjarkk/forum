@@ -16,9 +16,10 @@ Make a softlink from build to you'r webserver
   - login
   - register
   - user settings
+  - set user proviel picture
 - message
   - ~~message itself~~ :heavy_check_mark:
-  - message reactions
+  - add reactions to messages
   - user icon 
   - react to the message
   - markdown support
@@ -29,7 +30,7 @@ Make a softlink from build to you'r webserver
   - make working links
 - lists
   - ~~messages~~ :heavy_check_mark:
-  - go to message if clicked 
+  - ~~go to message if clicked ~~ :heavy_check_mark:
   - sub lists
   - go to sub list it clicked
   - message user icon
@@ -42,3 +43,4 @@ Make a softlink from build to you'r webserver
 
 ## Maybe?
 - Add docker setup file
+- login with google

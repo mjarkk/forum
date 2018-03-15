@@ -143,11 +143,36 @@ body
           position relative
           top 1px
           left -2px
-
 .mainMessage
   display flex
   justify-content center
   align-items center
+  flex-direction column
+  .comment
+    width 100%
+    max-width 600px
+    background-color Background
+    border-radius 4px
+    box-shadow Shadow2
+    padding 10px
+    box-sizing border-box
+    margin-top 50px
+    textarea
+      width 100%
+      resize none
+      font-family sans-serif
+      padding 10px 
+      box-sizing border-box
+      font-size 17px
+      background-color rgba(0%, 0%, 0%, 0)
+      border 0px solid black
+      border-bottom 2px solid Primary
+      background-color Background
+      transition .2s background-color
+      &:focus
+        outline none
+        border-bottom 2px solid PrimaryDark
+        background-color BackgroundDark
   .messageItem
     max-width 600px
     width 100%
@@ -160,7 +185,7 @@ body
       justify-content center
       height 70px
       box-sizing border-box
-      padding-right 20px
+      padding-right 10px
       .proviel
         width 50px
         height 50px
@@ -189,8 +214,11 @@ body
         padding-bottom 5px
         margin-bottom 5px
       .msg
+        ul
+          margin-left 10px
         li
-          list-style-type none
+          list-style-type disc
+          list-style-position inside
       .btns
         border-top 3px solid #eee
         padding-top 5px
@@ -199,3 +227,10 @@ body
           background-color rgba(0%, 0%, 0%, 0)
           border 0px
           cursor pointer
+          display inline-block
+          padding 5px 10px
+          border-radius 4px
+          transition 0.2s background-color
+          margin-right 4px
+          &:hover
+            background-color BackgroundDark

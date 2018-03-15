@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {functions} from '../imports/functions.js'
+import {OpenMessage} from '../componenets/message.js'
 
 const log = console.log
 
@@ -34,7 +35,9 @@ class List extends Component {
         <div className="messages list">
           {(this.state.messages[0]) ? <h3>Messages</h3> : ''}
           {this.state.messages.map((msg, id) => 
-            <div key={id} className="listitem">
+            <div key={id} className="listitem" onClick={() => {
+              OpenMessage(msg)
+            }}>
               <div className="itemTitle">{msg.title}</div>
               <div className="subdata">
                 <div>Created by <span>{msg.username}</span></div>

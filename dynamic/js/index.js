@@ -33,7 +33,7 @@ class App extends Component {
           <List />
         </div>
         <BigMenu />
-        <Message />
+        <Message show={false} msgID={1}/>
       </div>
     )
   }
