@@ -28,7 +28,7 @@ I have added React to this project myself to learn a bit :D
   - make working links
 - lists
   - ~~messages~~ :heavy_check_mark:
-  - ~~go to message if clicked ~~ :heavy_check_mark:
+  - ~~go to message if clicked~~ :heavy_check_mark:
   - sub lists
   - go to sub list it clicked
   - message user icon
