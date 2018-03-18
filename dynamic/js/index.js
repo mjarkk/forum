@@ -8,6 +8,7 @@ import MDmenu from 'react-icons/lib/md/menu'
 import List from './componenets/list.js'
 import BigMenu, { menuHandeler } from './componenets/menu.js'
 import Message from './componenets/message.js'
+import LoginRegister, { LoginStatus } from './componenets/userhandeler.js'
 
 // style imports
 import '../stylus/style.styl'
@@ -18,7 +19,9 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      title: 'forum'
+      title: 'forum',
+      show: 'list',
+      LoginStatus
     }
   }
   render() {
@@ -29,11 +32,20 @@ class App extends Component {
             menuHandeler(true)
           }} size={35} /><h1>{this.state.title}</h1>
         </div>
-        <div className="listWrapper">
-          <List />
-        </div>
+        { (this.state.show == 'list') ? 
+            <div className="listWrapper">
+              <List />
+            </div>
+          : ''
+        }
+        
         <BigMenu />
-        <Message show={false} msgID={1}/>
+        <Message show={this.state.show == 'message'} onShow={(data) => {
+          // this function will be run when the post need to be shown
+          this.setState({
+            show: 'message'
+          })
+        }} msgID={1}/>
       </div>
     )
   }

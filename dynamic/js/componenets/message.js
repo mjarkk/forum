@@ -3,6 +3,8 @@ import snarkdown from 'snarkdown'
 import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 
+import { LoginStatus } from '../componenets/userhandeler.js'
+
 const log = console.log
 let message
 
@@ -20,12 +22,14 @@ class Message extends Component {
         premission : '',
         title : ''
       },
-      reactions: []
+      reactions: [],
+      LoginStatus
     }
     if (this.state.opened) {
       this.fetchMsg(this.state.id)
     }
     message = this
+    this['onShow'] = inputs.onShow || (() => {})
   }
   componentWillReceiveProps(inputs) {
     if ((!this.state.opened || this.state.id !== inputs.msgID) && inputs.show) {
@@ -35,9 +39,6 @@ class Message extends Component {
       opened: inputs.show,
       id: inputs.msgID
     })
-  }
-  openMsg(input) {
-
   }
   fetchMsg(id) {
     fetch('./api/message.php?id=' + id)
@@ -83,10 +84,20 @@ class Message extends Component {
               </div>
             </div>
           </div>
-          <div className="comment">
-            <h3>Comment</h3>
-            <textarea rows="4" cols="30" placeholder="Comment"></textarea>
-          </div>
+          { (this.state.LoginStatus.logedin) ? 
+            <div className="comment">
+              <h3>Comment</h3>
+              <textarea rows="4" cols="30" placeholder="Comment"></textarea>
+            </div>
+          : 
+            <div className="comment-need-login">
+              <p>Login / Register om een comment te plaatsen</p>
+              <div className="btns">
+                <button onClick={() => this.state.LoginStatus.openlogin(false)}>Login</button>
+                <button onClick={() => this.state.LoginStatus.openlogin(true)}>Register</button>
+              </div>
+            </div>
+          }
         </div>
       )
     } else {
@@ -110,4 +121,5 @@ export const OpenMessage = (input) => {
     }
   })
   message.fetchMsg(input.id)
+  message.onShow(message.state)
 }

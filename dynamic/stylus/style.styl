@@ -30,6 +30,24 @@ body
   font-family 'Roboto', sans-serif
   background-color BackgroundDark
   
+button
+  padding 5px 15px
+  border 0px solid black
+  cursor pointer
+  margin 5px
+  font-size 18px
+  background-color Primary
+  border-radius 3px
+  font-weight bold
+  box-shadow Shadow2
+  transition 0.2s box-shadow
+  border 2px solid Primary
+  &:hover
+    box-shadow Shadow1
+  &:focus
+    box-shadow Shadow1
+    border 2px solid black
+
 .header
   background-color Primary
   padding-bottom 50px
@@ -100,6 +118,7 @@ body
     padding 10px
 
 .bigMenu
+  z-index 100
   height 100vh
   width 100vw
   position fixed
@@ -144,6 +163,8 @@ body
           top 1px
           left -2px
 .mainMessage
+  position relative
+  top -38px
   display flex
   justify-content center
   align-items center
@@ -173,6 +194,21 @@ body
         outline none
         border-bottom 2px solid PrimaryDark
         background-color BackgroundDark
+  .comment-need-login
+    width 100%
+    max-width 600px
+    background-color Background
+    border-radius 4px
+    box-shadow Shadow2
+    padding 20px 10px
+    box-sizing border-box
+    margin-top 50px
+    p
+      text-align center
+    .btns
+      display flex 
+      justify-content center
+      align-items center
   .messageItem
     max-width 600px
     width 100%
@@ -192,7 +228,8 @@ body
         display flex
         align-items center
         justify-content center
-        background-color Primary
+        background-color Secondary
+        color white
         border-radius 25px
         font-size 30px
         line-height 0
@@ -232,5 +269,8 @@ body
           border-radius 4px
           transition 0.2s background-color
           margin-right 4px
+          box-shadow 0px 0px 0px 0px rgba(0%, 0%, 0%, 0)
           &:hover
+            background-color BackgroundDark
+          &:focus
             background-color BackgroundDark
