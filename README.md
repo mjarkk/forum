@@ -11,9 +11,10 @@ I have added React to this project myself to learn a bit :D
 
 ## To Do
 - user
-  - 
-  - login
-  - register
+  - login process
+  - ~~login style~~ :heavy_check_mark:
+  - register style
+  - register process
   - user settings
   - set user proviel picture
 - message
