@@ -40,6 +40,7 @@ class App extends Component {
         }
         
         <BigMenu />
+        <LoginRegister />
         <Message show={this.state.show == 'message'} onShow={(data) => {
           // this function will be run when the post need to be shown
           this.setState({

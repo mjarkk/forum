@@ -47,6 +47,13 @@ button
   &:focus
     box-shadow Shadow1
     border 2px solid black
+  &:disabled
+    background-color PrimaryDark
+    color black
+    border 2px solid PrimaryDark
+    cursor default
+    &:hover
+      box-shadow Shadow2
 
 .header
   background-color Primary
@@ -127,7 +134,7 @@ button
   transition 0.3s background-color
   .actualBigMenu
     transition 0.3s transform
-    willchange transform
+    will-change transform
     width 90%
     height 100vh
     overflow-y scroll
@@ -274,3 +281,64 @@ button
             background-color BackgroundDark
           &:focus
             background-color BackgroundDark
+
+.LoginRegister
+  position fixed
+  top 0px
+  left 0px
+  height 100vh
+  width 100vw
+  display flex
+  justify-content center
+  align-items center
+  background-color rgba(0%, 0%, 0%, 0.15)
+  z-index 21
+  .LRholder
+    width 100%
+    max-width 500px
+    background-color Background
+    border-radius 3px
+    box-shadow Shadow4
+    .LRtitle
+      h1
+        border-bottom 1px solid #ccc
+        box-sizing border-box
+        padding 10px 20px
+        margin-bottom 5px
+      .changeTab
+        display flex 
+        justify-content center
+        align-items center
+      .fillin
+        display flex 
+        justify-content center 
+        align-items center
+        flex-wrap wrap
+        .ml-input-holder
+          padding 0px 5px 5px 5px
+          max-width 230px
+
+.ml-input-holder
+  padding-top 10px
+  display flex 
+  flex-direction column
+  width 100%
+  max-width 270px
+  * 
+    cursor text
+  label
+    font-size 14px
+    transform-origin top left
+    transform scale(1.5,1.5) translateY(12px) translateX(5px)
+    transition 0.3s transform, 0.3s color
+    color rgba(0%, 0%, 0%, 0.5)
+    will-change transform
+  label.focus
+    transform scale(1,1) translateY(2px) translateX(5px)
+    color #000
+  input
+    background-color rgba(100%, 100%, 100%, 0)
+    border 0px
+    padding 5px
+    font-size 18px
+    border-bottom 2px solid PrimaryDark
