@@ -1,13 +1,37 @@
 # Forum
-Make a forum as school project using javascript and PHP.  
-I have added React to this project myself to learn a bit :D
+Make a forum as school project build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).  
 
 ## Setup
-- Make a softlink from build to you'r webserver
 - Install [node.js](https://nodejs.org/en/)
-- `npm i -g webpack webpack-cli yarn` (on linux you might need to add `sudo`)
+- `npm i -g webpack webpack-cli yarn` (on linux and macOS you might need to add `sudo`)
 - `yarn`
 - `yarn build`
+- Add a SQL database
+- now follow `Setup Build` or `Setup Dev`
+
+## Setup Build
+- Change `build/api/env.php` to your database info  
+- Copy the `build` folder to your webserver  
+
+## Setup Dev
+- Add to the nginx virtual server config:  
+```BASH
+location ~ (\.env) { 
+  return 404;
+}
+```  
+- In case of an apache server move the .htaccess to the root of your webserver  
+- Create: `build/api/.env`  
+- With This data:  
+```JSON
+{
+  "SQLpassword": "password",
+  "SQLusername": "username",
+  "SQLserver": "localhost",
+  "SQLdatabaseName": "forum"
+}
+```  
+- Make a softlink from `build` to you'r webserver  
 
 ## To Do
 - user
@@ -43,4 +67,3 @@ I have added React to this project myself to learn a bit :D
 
 ## Maybe?
 - Add docker setup file
-- login with google
