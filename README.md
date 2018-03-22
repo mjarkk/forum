@@ -20,7 +20,7 @@ location ~ (\.env) {
   return 404;
 }
 ```  
-- In case of an apache server move the .htaccess to the root of your webserver  
+- Or in case of an apache server move the .htaccess to the root of your webserver  
 - Create: `build/api/.env`  
 - With This data:  
 ```JSON

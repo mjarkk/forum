@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const htmlMinifier = require('html-minifier').minify
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 
@@ -59,11 +58,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       production: production,
       title: 'Forum',
-      minify: htmlMinifier,
       inject: false,
       hash: true,
-      filename: 'index.html',
-      template: 'dynamic/index.html',
+      filename: 'index.php',
+      template: 'dynamic/index.php',
     })
   ],
   stats: {

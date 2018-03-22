@@ -8,7 +8,7 @@ const log = console.log
 let LR = undefined // LR = login register
 
 let state = {
-  logedin: false,
+  logedin: window.userData.status,
   showLoginRegister: false,
   onTab: 'login',
   login: {

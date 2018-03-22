@@ -1,3 +1,8 @@
+<?php
+  $isHTML = True;
+  include_once './api/imports.php';
+  $userinf = aboutUser();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +11,20 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="preload" href="<%= htmlWebpackPlugin.files.js[0] %>" as="script"> <!-- preload the scripts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script>
+      <?php
+        if ($userinf['status']) {
+          echo "window.userData = " . json_encode(array(
+            'status' => True,
+            'inf' => $userinf['data']
+          ));
+        } else {
+          echo "window.userData = " . json_encode(array(
+            'status' => False
+          ));
+        }
+      ?>
+    </script>
   </head>
   <body>
     <noscript>

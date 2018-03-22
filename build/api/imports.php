@@ -1,13 +1,18 @@
 <?php
+session_start();
+
 include_once dirname(__FILE__) . '/env.php';
 include_once dirname(__FILE__) . '/settings.php';
 include_once dirname(__FILE__) . '/functions/pbkdf2.php';
 include_once dirname(__FILE__) . '/functions/checkuser.php';
+include_once dirname(__FILE__) . '/functions/userdata.php';
 
 $pdo = null;
 
-// set the header of all outputs to json because this is api data
-header('Content-type:application/json;charset=utf-8');
+if (!isset($isHTML) || (isset($isHTML) && $isHTML == False)) {
+  // set the header of all outputs to json because this is api data
+  header('Content-type:application/json;charset=utf-8');
+}
 
 // this array contains info about the server
 $report = array(
@@ -99,7 +104,7 @@ function getSalt() {
 }
 
 
-// create user to database
+// add user to database
 function createUser ($username, $password, $premissions = '1') {
   $salt = getSalt();
   $hash = pbkdf2("sha256", $password, $salt, 500, 100);

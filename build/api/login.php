@@ -15,13 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $user = $data['data'][0];
       $hash = pbkdf2("sha256", $_POST['password'], $user['salt'], 500, 100);
       if ($user['password'] == $hash) {
-        session_start();
         session_unset(); // reset the session to cleanup a old session if it exsists
         $_SESSION["ID"] = $user['ID'];
         $_SESSION["username"] = $user['username'];
+        $userInf = aboutUser($user['ID']);
         echo json_encode(array(
           'status' => True,
-          'data' => $_SESSION
+          'data' => $userInf['data']
         ));
       } else {
         echo json_encode(array(
