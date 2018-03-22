@@ -20,9 +20,9 @@ I have added React to this project myself to learn a bit :D
 - message
   - ~~message itself~~ :heavy_check_mark:
   - add reactions to messages
-  - user icon 
+  - user icon
   - react to the message
-  - markdown support
+  - ~~markdown support~~ :heavy_check_mark:
   - add things to markdown
   - save fetches to indexedDB or local storage
   - scroll and load more data

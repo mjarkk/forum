@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import MLinput from '../componenets/ml-input.js'
 import MLclose from 'react-icons/lib/md/close'
-
 import { functions } from '../imports/functions.js'
 
 const log = console.log
@@ -70,6 +69,10 @@ class LoginRegister extends Component {
                         onClick={() => {
                           functions.fetch('./api/login.php', 'json', (data) => {
                             log(data)
+                          }, {
+                            cache: 'no-cache',
+                            method: 'POST',
+                            body: this.state.login
                           })
                         }}
                       >Login</button>
