@@ -14,9 +14,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($data['status'] && count($data['data']) >= 1) {
       $user = $data['data'][0];
       $hash = pbkdf2("sha256", $_POST['password'], $user['salt'], 500, 100);
-      echo json_encode($user['password'] == $hash);
+      if ($user['password'] == $hash) {
+        session_start();
+        session_unset(); // reset the session to cleanup a old session if it exsists
+        $_SESSION["ID"] = $user['ID'];
+        $_SESSION["username"] = $user['username'];
+        echo json_encode(array(
+          'status' => True,
+          'data' => $_SESSION
+        ));
+      } else {
+        echo json_encode(array(
+          'status' => False,
+          'why' => 'username or password wrong'
+        ));
+      }
     } else {
-      echo json_encode(array('status' => False, 'why' => 'user not found'));  
+      echo json_encode(array(
+        'status' => False,
+        'why' => 'username or password wrong'
+      ));
     }
   } else {
     echo json_encode(array('status' => False, 'why' => 'No username and password in post body'));

@@ -15,6 +15,10 @@ let state = {
     password: '',
     username: ''
   },
+  register: {
+    password: '',
+    username: ''
+  },
   openlogin: (what) => {
     LR.setState({
       showLoginRegister: true,
@@ -40,8 +44,11 @@ class LoginRegister extends Component {
               <div className="LRtitle">
                 <h1>{ this.state.onTab[0].toUpperCase() }{ this.state.onTab.slice(1, this.state.onTab.length) }</h1>
                 <div className="changeTab">
-                  <button disabled={this.state.onTab == 'login'}  onClick={() => this.setState({onTab: 'login'})}>Login</button>
-                  <button disabled={this.state.onTab == 'register'} onClick={() => this.setState({onTab: 'register'})}>Register</button>
+                  { (this.state.onTab == 'login') ? 
+                    <button disabled={this.state.onTab == 'register'} onClick={() => this.setState({onTab: 'register'})}>Register</button>
+                  : 
+                    <button disabled={this.state.onTab == 'login'}  onClick={() => this.setState({onTab: 'login'})}>Login</button>
+                  }
                 </div>
                 { (this.state.onTab == 'login') ?
                   <div className="fillin login">
