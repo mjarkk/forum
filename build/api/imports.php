@@ -116,3 +116,18 @@ function createUser ($username, $password, $premissions = '1') {
   ", array(':hash' => $hash, ':salt' => $salt, ':username' => $username, ':premissions' => $premissions));
   return (true);
 }
+
+if (isset($_COOKIE["userID"]) && isset($_COOKIE["sessionBackup"]) && !isset($_SESSION["ID"])) {
+  // resume the session if there is a cookie backup
+  $data = SQLfetch("
+    SELECT *
+    FROM users
+    WHERE ID = :id
+  ", array(
+    ':id' => $_COOKIE["userID"]
+  ));
+  if ($data['status'] && count($data['data']) >= 1 && pbkdf2("sha256", $data['data'][0]['salt'], $data['data'][0]['salt'], 50, 100) == $_COOKIE["sessionBackup"]) {
+    $_SESSION["ID"] = $data['data'][0]['ID'];
+    $_SESSION["username"] = $data['data'][0]['username'];
+  }
+}

@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
-    <link rel="preload" href="js/6d8c7756f63ad460ce69.bundel.js?6d8c7756f63ad460ce69" as="script"> <!-- preload the scripts -->
+    <link rel="preload" href="js/5cc18c13e15076bb52fa.bundel.js?5cc18c13e15076bb52fa" as="script"> <!-- preload the scripts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script>
       <?php
@@ -51,7 +51,7 @@
       </div>
     </noscript>
     <div id="root"></div>
-    <script src="js/6d8c7756f63ad460ce69.bundel.js?6d8c7756f63ad460ce69"></script>
+    <script src="js/5cc18c13e15076bb52fa.bundel.js?5cc18c13e15076bb52fa"></script>
     
       <script src="http://localhost:35729/livereload.js"></script>
     

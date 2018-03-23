@@ -19,6 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION["ID"] = $user['ID'];
         $_SESSION["username"] = $user['username'];
         $userInf = aboutUser($user['ID']);
+
+        // set session backup cookie
+        setcookie(
+          "userID", 
+          $user['ID'], 
+          time() + (86400 * 365), 
+          "/"
+        );
+        setcookie(
+          "sessionBackup", 
+          pbkdf2("sha256", $user['salt'], $user['salt'], 50, 100), 
+          time() + (86400 * 365), 
+          "/"
+        );
+        
         echo json_encode(array(
           'status' => True,
           'data' => $userInf['data']

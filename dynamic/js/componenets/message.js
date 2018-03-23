@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import snarkdown from 'snarkdown'
 import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
+import {functions} from '../imports/functions.js'
 
 const log = console.log
 let message
@@ -93,7 +94,15 @@ class Message extends Component {
                   disabled={!this.state.reaction}
                   onClick={() => {
                     // TODO: add reaction to DB
-                    log(this.state.reaction)
+                    functions.fetch('./api/message.php', 'json', (data) => {
+                      log(data)
+                    }, {
+                      cache: 'no-cache',
+                      method: 'POST',
+                      body: {
+                        reaction: this.state.reaction
+                      }
+                    })
                   }}
                   className="placeComment"
                 >Plaats comment</button>
