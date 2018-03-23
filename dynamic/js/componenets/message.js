@@ -3,8 +3,6 @@ import snarkdown from 'snarkdown'
 import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 
-import { LoginStatus } from '../componenets/userhandeler.js'
-
 const log = console.log
 let message
 
@@ -12,6 +10,7 @@ class Message extends Component {
   constructor(inputs) {
     super()
     this.state = {
+      reaction: '',
       opened: inputs.show,
       id: inputs.msgID,
       beginMsg: {
@@ -23,7 +22,7 @@ class Message extends Component {
         title : ''
       },
       reactions: [],
-      LoginStatus
+      LoginStatus: inputs.LoginStatus
     }
     if (this.state.opened) {
       this.fetchMsg(this.state.id)
@@ -37,7 +36,8 @@ class Message extends Component {
     }
     this.setState({
       opened: inputs.show,
-      id: inputs.msgID
+      id: inputs.msgID,
+      LoginStatus: inputs.LoginStatus
     })
   }
   fetchMsg(id) {
@@ -87,7 +87,17 @@ class Message extends Component {
           { (this.state.LoginStatus.logedin) ? 
             <div className="comment">
               <h3>Comment</h3>
-              <textarea rows="4" cols="30" placeholder="Comment"></textarea>
+              <textarea value={ this.state.reaction } onChange={ (ev) => this.setState({reaction: ev.target.value}) } rows="4" cols="30" placeholder="Comment"></textarea>
+              <div className="btns">
+                <button 
+                  disabled={!this.state.reaction}
+                  onClick={() => {
+                    // TODO: add reaction to DB
+                    log(this.state.reaction)
+                  }}
+                  className="placeComment"
+                >Plaats comment</button>
+              </div>
             </div>
           : 
             <div className="comment-need-login">

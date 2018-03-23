@@ -1,26 +1,24 @@
 import React, { Component } from 'react'
 import MDsettings from 'react-icons/lib/md/settings'
 
-import { LoginStatus } from '../componenets/userhandeler.js'
-
 const log = console.log
 
 let menu = undefined
 
 class BigMenu extends Component {
-  constructor() {
+  constructor(inputs) {
     super()
     this.state = {
       openend: false,
       display: false,
-      proviel: {
-        name: 'user',
-        comments: 0,
-        karma: 0
-      },
-      LoginStatus
+      LoginStatus: inputs.LoginStatus
     }
     menu = this
+  }
+  componentWillReceiveProps(inputs) {
+    this.setState({
+      LoginStatus: inputs.LoginStatus
+    })
   }
   open() {
     this.setState({
@@ -57,9 +55,9 @@ class BigMenu extends Component {
         <div className="actualBigMenu" style={{transform: (this.state.opened) ? 'translateX(-0%)' : 'translateX(-100%)'}}>
           { (this.state.LoginStatus.logedin) ?
             <div className="proviel">
-              <h2>{ this.state.proviel.name }</h2>
-              <p>Comments: <span>{this.state.proviel.comments }</span></p>
-              <p>Karma: <span>{this.state.proviel.karma}</span></p>
+              <h2>{ this.state.LoginStatus.userData.username }</h2>
+              <p>Comments: <span>{ this.state.LoginStatus.userData.comments }</span></p>
+              <p>Karma: <span>{ 0 }</span></p>
             </div>
           : 
             <div className="proviel">

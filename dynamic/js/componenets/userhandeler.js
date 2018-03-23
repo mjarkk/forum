@@ -9,6 +9,7 @@ let LR = undefined // LR = login register
 
 let state = {
   logedin: window.userData.status,
+  userData: window.userData.inf,
   showLoginRegister: false,
   onTab: 'login',
   login: {
@@ -32,6 +33,11 @@ class LoginRegister extends Component {
     super(inputs)
     this.state = state
     LR = this
+    if (typeof inputs.onUserDataChange == 'function') {
+      this.onUserDataChange = inputs.onUserDataChange
+    } else {
+      this.onUserDataChange = () => {}
+    }
   }
   componentWillReceiveProps(inputs) {
     
@@ -75,7 +81,17 @@ class LoginRegister extends Component {
                         disabled={!this.state.login.username || !this.state.login.password}
                         onClick={() => {
                           functions.fetch('./api/login.php', 'json', (data) => {
-                            log(data)
+                            if(data.status) {
+                              let toSet = {
+                                userData: data.data,
+                                logedin: true,
+                                showLoginRegister: false
+                              }
+                              this.setState(toSet, () => {
+                                state = this.state
+                                this.onUserDataChange(toSet)
+                              })
+                            }
                           }, {
                             cache: 'no-cache',
                             method: 'POST',
