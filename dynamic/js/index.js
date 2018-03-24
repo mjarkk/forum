@@ -34,7 +34,9 @@ class App extends Component {
         </div>
         { (this.state.show == 'list') ? 
             <div className="listWrapper">
-              <List />
+              <List 
+                LoginStatus={this.state.LoginStatus} 
+              />
             </div>
           : ''
         }

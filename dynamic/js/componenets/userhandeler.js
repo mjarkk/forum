@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import MLinput from '../componenets/ml-input.js'
-import MLclose from 'react-icons/lib/md/close'
+import MDinput from '../componenets/md-input.js'
+import MDclose from 'react-icons/lib/md/close'
 import { functions } from '../imports/functions.js'
 
 const log = console.log
@@ -58,7 +58,7 @@ class LoginRegister extends Component {
                 </div>
                 { (this.state.onTab == 'login') ?
                   <div className="fillin login">
-                    <MLinput 
+                    <MDinput 
                       label="username" 
                       type="text" 
                       onChange={(data) => 
@@ -67,7 +67,7 @@ class LoginRegister extends Component {
                         })
                       } 
                     />
-                    <MLinput 
+                    <MDinput 
                       label="password" 
                       type="password" 
                       onChange={(data) =>

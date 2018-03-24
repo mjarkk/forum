@@ -4,6 +4,7 @@ import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 import MDdelete from 'react-icons/lib/md/delete'
 import {functions} from '../imports/functions.js'
+import MDinput from '../componenets/md-input.js'
 
 const log = console.log
 let message
@@ -69,6 +70,7 @@ class Message extends Component {
     this.state = {
       waitingServe: false,
       reaction: '',
+      startTitle: '',
       opened: inputs.show,
       id: inputs.msgID,
       beginMsg: {
@@ -86,7 +88,7 @@ class Message extends Component {
       this.fetchMsg(this.state.id)
     }
     message = this
-    this['onShow'] = inputs.onShow || (() => {})
+    this.onShow = inputs.onShow || (() => {})
   }
   componentWillReceiveProps(inputs) {
     let toSet = {
@@ -95,7 +97,8 @@ class Message extends Component {
     }
     this.setState(toSet)
   }
-  fetchMsg(id) {
+  fetchMsg(id, callback) {
+    const doCallback = () => typeof callback == 'function' ? callback() : false
     fetch('./api/message.php?id=' + id)
       .then(res => res.json())
       .then(jsonData => {
@@ -104,26 +107,32 @@ class Message extends Component {
           this.setState({
             beginMsg: jsonData.created,
             reactions: jsonData.data
-          })
+          }, () => doCallback())
         } else {
+          doCallback()
           // some error report 
         }
       })
-      .catch(err => log(err))
+      .catch(err => {
+        log(err)
+        doCallback()
+      })
   }
   render() {
     if (this.state.opened) {
       return (
         <div className="mainMessage">
           
-          <ListItem 
-            username={this.state.beginMsg.username} 
-            created={this.state.beginMsg.created} 
-            title={this.state.beginMsg.title}
-            msg={this.state.beginMsg.msg} 
-            LoginStatus={this.state.LoginStatus}
-            id={this.state.beginMsg.id}
-          />
+          {(this.state.beginMsg.id != '-1') ? 
+            <ListItem 
+              username={this.state.beginMsg.username} 
+              created={this.state.beginMsg.created} 
+              title={this.state.beginMsg.title}
+              msg={this.state.beginMsg.msg} 
+              LoginStatus={this.state.LoginStatus}
+              id={this.state.beginMsg.id}
+            />
+          : ''} 
 
           {this.state.reactions.map((el, id) => 
             <ListItem
@@ -138,12 +147,24 @@ class Message extends Component {
           )}
 
           { (this.state.LoginStatus.logedin) ? 
-            <div className="comment">
-              <h3>Comment</h3>
+            <div className={(this.state.beginMsg.id == '-1' ? 'newMessage ' : '') + 'comment'}>
+              <h3>{(this.state.beginMsg.id == '-1') ? 'Nieuw bericht' : 'Comment'}</h3>
+              {(this.state.beginMsg.id == '-1') ? 
+                <MDinput 
+                  label="title" 
+                  type="text" 
+                  onChange={(newTitle) => 
+                    this.setState({
+                      startTitle: newTitle
+                    })
+                  } 
+                />
+              :''}
               <textarea value={ this.state.reaction } onChange={ (ev) => this.setState({reaction: ev.target.value}) } rows="4" cols="30" placeholder="Comment"></textarea>
+              {(this.state.beginMsg.id == '-1') ? <p>Pro tip: dit forum heeft support voor <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a></p> : ''}
               <div className="btns">
                 <button 
-                  disabled={!this.state.reaction || this.state.waitingServe}
+                  disabled={!this.state.reaction || this.state.waitingServe || (this.state.beginMsg.id == '-1' && !this.state.startTitle)}
                   onClick={() => {
                     if (typeof this.state.beginMsg.id == 'string') {
                       let reactionToSend = this.state.reaction
@@ -151,7 +172,7 @@ class Message extends Component {
                         waitingServe: true
                       }, () => {
                         functions.fetch('./api/message.php', 'json', (data) => {
-                          if (data.status) {
+                          if (data.status && this.state.beginMsg.id != '-1') {
                             // add the message to the list if it was added to the database
                             let now = new Date()
                             let hours = now.getHours()
@@ -167,21 +188,35 @@ class Message extends Component {
                               reaction: '',
                               waitingServe: false
                             })
+                          } else if (data.status) {
+                            this.fetchMsg(data.id, () => {
+                              this.setState({
+                                waitingServe: false,
+                                reaction: '',
+                                startTitle: ''
+                              })
+                            })
+                          } else {
+                            // some error report
+                            this.setState({
+                              waitingServe: false
+                            })
                           }
                         }, {
                           cache: 'no-cache',
                           method: 'POST',
                           body: {
                             reaction: reactionToSend,
+                            messageTitle: this.state.startTitle,
                             messageId: this.state.beginMsg.id,
-                            todo: 'add'
+                            todo: this.state.beginMsg.id == '-1' ? 'create' : 'add'
                           }
                         })
                       })
                     }
                   }}
                   className="placeComment"
-                >Plaats comment</button>
+                >Plaats {(this.state.beginMsg.id == '-1') ? 'bericht' : 'comment'}</button>
               </div>
             </div>
           : 
@@ -202,6 +237,23 @@ class Message extends Component {
 }
 
 export default Message
+export const CreateMessage = () => {
+  message.setState({
+    opened: true,
+    id: -1,
+    title: '',
+    msg: '',
+    beginMsg: {
+      created: '',
+      username: '',
+      id : '-1',
+      msg : '',
+      premission : '',
+      title : ''
+    }
+  })
+  message.onShow(message.state)
+}
 export const OpenMessage = (input) => {
   message.setState({
     opened: true,

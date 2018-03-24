@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import {functions} from '../imports/functions.js'
 import {OpenMessage} from '../componenets/message.js'
+import {CreateMessage} from '../componenets/message.js'
 
 const log = console.log
 
 class List extends Component {
-  constructor() {
-    super()
+  constructor(inputs) {
+    super(inputs)
     this.state = {
       subForums: [],
       messages: [],
-      forumName: ''
+      forumName: '',
+      LoginStatus: inputs.LoginStatus
     }
     fetch('./api/list.php?what=0') // fetch the list
       .then(res => res.json())
@@ -29,12 +31,19 @@ class List extends Component {
         <div className="title">
           <h2>{this.state.forumName}</h2>
         </div>
+        {(this.state.LoginStatus.logedin) ? <div className="buttons">
+          <button
+            onClick={() => {
+              CreateMessage()
+            }}
+          >Nieuw bericht</button>
+        </div> : ''}
         <div className="lists list">
           {(this.state.subForums[0]) ? <h3>Sub forums</h3> : ''}
         </div>
         <div className="messages list">
           {(this.state.messages[0]) ? <h3>Messages</h3> : ''}
-          {this.state.messages.map((msg, id) => 
+          {this.state.messages.reverse().map((msg, id) => 
             <div key={id} className="listitem" onClick={() => {
               OpenMessage(msg)
             }}>
