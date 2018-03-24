@@ -39,18 +39,26 @@ class App extends Component {
           : ''
         }
         
-        <BigMenu LoginStatus={this.state.LoginStatus} />
-        <LoginRegister onUserDataChange={(newData) => {
-          let toSet = this.state
-          toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
-          this.setState(toSet)
-        }} />
-        <Message LoginStatus={this.state.LoginStatus} show={this.state.show == 'message'} onShow={(data) => {
-          // this function will be run when the post need to be shown
-          this.setState({
-            show: 'message'
-          })
-        }} msgID={1}/>
+        <BigMenu 
+          LoginStatus={this.state.LoginStatus} 
+        />
+        <LoginRegister 
+          onUserDataChange={(newData) => {
+            let toSet = this.state
+            toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
+            this.setState(toSet)
+          }}
+        />
+        <Message 
+          LoginStatus={this.state.LoginStatus} 
+          show={this.state.show == 'message'} 
+          onShow={(data) => {
+            // this function will be run when the post need to be shown
+            this.setState({
+              show: 'message'
+            })
+          }}
+        />
       </div>
     )
   }
