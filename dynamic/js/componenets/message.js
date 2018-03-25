@@ -5,6 +5,7 @@ import MDshare from 'react-icons/lib/md/share'
 import MDdelete from 'react-icons/lib/md/delete'
 import {functions} from '../imports/functions.js'
 import MDinput from '../componenets/md-input.js'
+import Popup from '../componenets/popup.js'
 
 const log = console.log
 let message
@@ -17,7 +18,6 @@ const escapeHtml = unsafe =>
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
-    .replace(/javascript\:|data\:/gi,'') // block javascript: and data: as link
 
 // return a message
 const ListItem = (props) => 
@@ -63,7 +63,6 @@ const ListItem = (props) =>
     </div>
   </div>
 
-
 class Message extends Component {
   constructor(inputs) {
     super()
@@ -81,6 +80,13 @@ class Message extends Component {
         premission : '',
         title : ''
       },
+      popup: {
+        url: '',
+        title: '',
+        open: false,
+        msg: '',
+        actions: false
+      },
       reactions: [],
       LoginStatus: inputs.LoginStatus
     }
@@ -89,6 +95,49 @@ class Message extends Component {
     }
     message = this
     this.onShow = inputs.onShow || (() => {})
+  }
+  popupCallback(buttonID) {
+    let button = message.state.popup.actions[buttonID]
+    if(!button.clickMe) {
+      let win = window.open(message.state.popup.url, '_blank')
+      win.focus()
+    }
+  }
+  componentDidUpdate (prevProps, prevState) {
+    let aTags = [...document.querySelectorAll('.messageItem .acctualMessage a')]
+    aTags.map(el => {
+      if (/javascript\:|data\:|http\:/gi.exec(el.href)) {
+        el.onclick = (ev) => {
+          ev.preventDefault()
+          let newPopup = this.state.popup
+          newPopup.url = ev.target.href
+          if (ev.target.href.toLowerCase().indexOf('http:') >= 0) {
+            newPopup.title = 'Deze link is niet vijlig'
+            newPopup.msg = 'Deze site heeft geen SSL certificaat waardoor het verkeer niet ge-encrypt is'
+            newPopup.open = true
+            newPopup.actions = [{
+              text: 'Ga terug',
+              clickMe: true
+              },{
+              text: 'Open',
+              clickMe: false
+            }]
+          } else {
+            newPopup.title = 'Deze link is niet vijlig'
+            newPopup.msg = 'Deze link probeert toegang te krijgen tot je browser'
+            newPopup.open = true
+            newPopup.actions = [{
+              text: 'Ga terug',
+              clickMe: true
+            }]
+          }
+          this.setState({
+            popup: newPopup
+          })
+        }
+      }
+      return el
+    })
   }
   componentWillReceiveProps(inputs) {
     let toSet = {
@@ -228,6 +277,13 @@ class Message extends Component {
               </div>
             </div>
           }
+          <Popup 
+            open={this.state.popup.open}
+            title={this.state.popup.title}
+            msg={this.state.popup.msg}
+            callback={this.popupCallback}
+            actions={this.state.popup.actions}
+          />
         </div>
       )
     } else {
