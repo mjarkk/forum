@@ -97,6 +97,11 @@ class Message extends Component {
     this.onShow = inputs.onShow || (() => {})
   }
   popupCallback(buttonID) {
+    message.setState({
+      popup: Object.assign({}, message.state.popup, {
+        open: false
+      })
+    })
     let button = message.state.popup.actions[buttonID]
     if(!button.clickMe) {
       let win = window.open(message.state.popup.url, '_blank')

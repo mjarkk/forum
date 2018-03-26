@@ -17,7 +17,9 @@ class Popup extends Component {
     this.callback = inputs.callback || (() => {})
   }
   componentWillReceiveProps(inputs) {
-    this.setState(inputs)
+    if (inputs.open || inputs.open != this.state.open) {
+      this.setState(inputs)
+    }
   }
   render() {
     if (this.state.open) {
