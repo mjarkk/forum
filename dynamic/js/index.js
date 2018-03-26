@@ -13,6 +13,9 @@ import LoginRegister, { LoginStatus } from './componenets/userhandeler.js'
 // style imports
 import '../stylus/style.styl'
 
+// import tests
+import './imports/tests.js'
+
 const log = console.log
 
 class App extends Component {
