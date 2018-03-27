@@ -20,7 +20,9 @@ let cleanOptions = {
 
 module.exports = {
   entry: {
-    bundel: './dynamic/js/index.js'
+    // only include the tests.js when it's needed
+    bundel: './dynamic/js/index.js',
+    tests: './dynamic/js/tests.js'
   },
   output: {
     filename: 'js/[hash].[name].js',

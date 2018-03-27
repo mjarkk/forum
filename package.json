@@ -6,13 +6,28 @@
   "author": "Mark Kopenga <mkopenga@gmail.com>",
   "license": "GPL-3.0",
   "scripts": {
-    "build": "webpack --watch --progress --config \"webpack.config.js\""
+    "build": "webpack --watch --progress --config \"webpack.config.js\"",
+    "test": "ava test.js --color",
+    "funtest": "ava test.js --tap | tap-nyan"
+  },
+  "ava": {
+    "babel": {
+      "testOptions": {
+        "babelrc": false
+      }
+    }
   },
   "dependencies": {
+    "ava": "^1.0.0-beta.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.10",
     "eslint": "^4.18.2",

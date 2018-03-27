@@ -9,7 +9,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="preload" href="<%= htmlWebpackPlugin.files.js[0] %>" as="script"> <!-- preload the scripts -->
+    <% htmlWebpackPlugin.files.js.forEach(jsFile => { %>
+      <% if (jsFile.indexOf('tests.js') == -1) { %>
+        <link rel="preload" href="<%= jsFile %>" as="script"> <!-- preload the scripts -->
+      <% } %>
+    <% }) %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script>
       <?php
@@ -51,7 +55,11 @@
       </div>
     </noscript>
     <div id="root"></div>
-    <script src="<%= htmlWebpackPlugin.files.js[0] %>"></script>
+    <% htmlWebpackPlugin.files.js.forEach(jsFile => { %>
+      <% if (jsFile.indexOf('tests.js') == -1) { %>
+        <script src="<%= jsFile %>"></script>
+      <% } %>
+    <% }) %>
     <%if (!htmlWebpackPlugin.options.production) { %>
       <script src="http://localhost:35729/livereload.js"></script>
     <% } %>
