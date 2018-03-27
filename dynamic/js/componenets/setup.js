@@ -44,7 +44,7 @@ class Setup extends Component {
             {(this.state.part == 0) ? 
               <div className="part part1">
                 <h1>Setup</h1>
-                <p>We hebben een database nodig om berichten, gebruikers instellingen te kunnen opslaan</p>
+                <p>We hebben een database nodig om berichten, gebruikers, instellingen en alle andere soorten data te kunnen opslaan</p>
                 <button onClick={() => {
                   this.setState({
                     part: 1
