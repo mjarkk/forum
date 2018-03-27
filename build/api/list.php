@@ -27,23 +27,27 @@ $listinf = SQLfetch("
 
 $listname = ($listinf['status'] == True && isset($listinf['data'][0])) ? $listinf['data'][0]['name'] : "---";
 
-// add every item to a new array
-$_data = array();
-foreach ($data['data'] as $key => $value) {
-  array_push($_data, array(
-    'created' => $value['created'],
-    'premission' => $value['premission'],
-    'id' => $value['ID'],
-    'title' => $value['title'],
-    'username' => $value['username']
+if ($data['status'] && isset($data['data'][0])) {
+  // add every item to a new array
+  $_data = array();
+  foreach ($data['data'] as $key => $value) {
+    array_push($_data, array(
+      'created' => $value['created'],
+      'premission' => $value['premission'],
+      'id' => $value['ID'],
+      'title' => $value['title'],
+      'username' => $value['username']
+    ));
+  }
+
+  $list = array();
+
+  echo json_encode(array(
+    'title' => $listname,
+    'messages' => $_data,
+    'lists' => $list,
+    'messagesStatus' => isset($data['data'][0])
   ));
+} else {
+  echo json_encode($report);
 }
-
-$list = array();
-
-echo json_encode(array(
-  'title' => $listname,
-  'messages' => $_data,
-  'lists' => $list,
-  'messagesStatus' => isset($data['data'][0])
-));

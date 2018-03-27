@@ -14,7 +14,7 @@ import LoginRegister, { LoginStatus } from './componenets/userhandeler.js'
 import '../stylus/style.styl'
 
 // import tests
-import './imports/tests.js'
+import tests from './imports/tests.js'
 
 const log = console.log
 

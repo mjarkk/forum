@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Setup from '../componenets/setup.js'
 import {functions} from '../imports/functions.js'
 import {OpenMessage} from '../componenets/message.js'
 import {CreateMessage} from '../componenets/message.js'
@@ -12,18 +13,32 @@ class List extends Component {
       subForums: [],
       messages: [],
       forumName: '',
-      LoginStatus: inputs.LoginStatus
+      LoginStatus: inputs.LoginStatus,
+      showSetup: false,
     }
-    fetch('./api/list.php?what=0') // fetch the list
-      .then(res => res.json())
-      .then(jsonData => {
-        this.setState({
-          subForums: jsonData.lists,
-          messages: jsonData.messages,
-          forumName: jsonData.title
-        })
-      })
-      .catch(err => log(err))
+    functions.fetch(
+      './api/list.php?what=0',
+      'json',
+      (data) => {
+        if (data.status && typeof data.data.SQL == 'undefined' && typeof data.data.DB == 'undefined' && typeof data.data.ENV == 'undefined') {
+          let jsonData = data.data
+          this.setState({
+            subForums: jsonData.lists,
+            messages: jsonData.messages,
+            forumName: jsonData.title
+          })
+        } else {
+          let status = data.data
+          if(!status.DB && !status.ENV && !status.SQL) {
+            this.setState({
+              showSetup: true
+            })
+          } else {
+            // the database works 50%
+          }
+        }
+      }
+    )
   }
   render() {
     return (
@@ -55,6 +70,14 @@ class List extends Component {
             </div>
           )}
         </div>
+        <Setup 
+          show={this.state.showSetup}
+          callback={(show) => {
+            this.setState({
+              showSetup: show
+            })
+          }}
+        />
       </div>
     )
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MDinput from '../componenets/md-input.js'
-import MDclose from 'react-icons/lib/md/close'
 import { functions } from '../imports/functions.js'
 
 const log = console.log
