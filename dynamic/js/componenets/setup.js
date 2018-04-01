@@ -134,10 +134,10 @@ class Setup extends Component {
                     log(data)
                     if (data.status) {
                       this.setState({
-                        // part: 3,
+                        part: 3,
                         blockinput: false
                       }, () => {
-                        // this.callback(false)
+                        this.callback(false)
                       })
                     } else {
                       this.setState({

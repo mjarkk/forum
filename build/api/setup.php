@@ -85,6 +85,54 @@ function CreateTables() {
             ('3', 'home', 'defualt', '1')
           ");
         }
+        $result = SQLfetch("
+          SELECT COUNT(ID) AS 'count'
+          FROM messages
+        ")['data'];
+        if ($result[0]['count'] == 0) {
+          // add first message
+          $userid = 1;
+          $date = date("Y/m/d") . '-' . date("h:i:sa");
+          SQLfetch("
+            INSERT INTO `messages` 
+            (`bindTo`, `message`, `created`, `userID`, `start`, `premission`, `inList`, `title`) 
+            VALUES 
+            (:bindTo, :message, :created, :userID, :start, :premission, :inList, :title);
+          ", array(
+            ':bindTo' => -1,
+            ':message' => '
+## Yey.. 
+Het forum werkt nu kan je **post** maken en **comments** plaatsen die gebruik maken van [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)       
+            ',
+            ':created' => $date,
+            ':userID' => $userid,
+            ':start' => 'true',
+            ':premission' => '1',
+            ':inList' => '0',
+            ':title' => 'Welkom!'
+          ));
+          $getPostID = SQLfetch("
+            SELECT MAX(ID) as highestValue
+            FROM messages
+            WHERE userID = :userID
+          ", array(
+            ':userID' => $userid
+          ));
+          $postID = -1;
+          if ($getPostID['status'] && count($getPostID['data']) >= 1) {
+            $postID = $getPostID['data'][0]['highestValue'];
+
+            // change the bindTo from the post to the ID of itself
+            SQLfetch("
+              UPDATE messages
+              SET bindTo = :bindTo
+              WHERE ID = :bindTo
+            ",array(
+              ':bindTo' => $postID
+            ));
+          
+          }
+        } 
         $usersResult = SQLfetch("
           SELECT COUNT(ID) AS 'count'
           FROM users

@@ -28,8 +28,8 @@ class List extends Component {
             forumName: jsonData.title
           })
         } else {
-          let status = data.data
-          if(!status.DB && !status.ENV && !status.SQL) {
+          let status = data.report
+          if(status && !status.DB && !status.ENV && !status.SQL) {
             this.setState({
               showSetup: true
             })

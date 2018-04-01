@@ -11,7 +11,7 @@
     <title>Forum</title>
     
       
-        <link rel="preload" href="js/81c84d6c19b04a65b2df.bundel.js?81c84d6c19b04a65b2df" as="script"> <!-- preload the scripts -->
+        <link rel="preload" href="js/4d89ef6f8e4ab1c59ab3.bundel.js?4d89ef6f8e4ab1c59ab3" as="script"> <!-- preload the scripts -->
       
     
       
@@ -59,7 +59,7 @@
     <div id="root"></div>
     
       
-        <script src="js/81c84d6c19b04a65b2df.bundel.js?81c84d6c19b04a65b2df"></script>
+        <script src="js/4d89ef6f8e4ab1c59ab3.bundel.js?4d89ef6f8e4ab1c59ab3"></script>
       
     
       
