@@ -12,6 +12,8 @@
     <% htmlWebpackPlugin.files.js.forEach(jsFile => { %>
       <% if (jsFile.indexOf('tests.js') == -1) { %>
         <link rel="preload" href="<%= jsFile %>" as="script"> <!-- preload the scripts -->
+      <% } else { %>
+        <script>window.testFile = "<%= jsFile %>"</script>
       <% } %>
     <% }) %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
