@@ -11,7 +11,7 @@
     <title>Forum</title>
     
       
-        <link rel="preload" href="js/06a23bdfa47d580d5b15.bundel.js?06a23bdfa47d580d5b15" as="script"> <!-- preload the scripts -->
+        <link rel="preload" href="js/81c84d6c19b04a65b2df.bundel.js?81c84d6c19b04a65b2df" as="script"> <!-- preload the scripts -->
       
     
       
@@ -22,14 +22,14 @@
         if ($userinf['status']) {
           echo "window.userData = " . json_encode(array(
             'status' => True,
-            'inf' => $userinf['data']
+            'inf' => $userinf['data'],
           ));
         } else {
           echo "window.userData = " . json_encode(array(
             'status' => False
           ));
         }
-      ?>
+      ?>;window.productionMode = false;
     </script>
   </head>
   <body>
@@ -59,7 +59,7 @@
     <div id="root"></div>
     
       
-        <script src="js/06a23bdfa47d580d5b15.bundel.js?06a23bdfa47d580d5b15"></script>
+        <script src="js/81c84d6c19b04a65b2df.bundel.js?81c84d6c19b04a65b2df"></script>
       
     
       

@@ -20,14 +20,14 @@
         if ($userinf['status']) {
           echo "window.userData = " . json_encode(array(
             'status' => True,
-            'inf' => $userinf['data']
+            'inf' => $userinf['data'],
           ));
         } else {
           echo "window.userData = " . json_encode(array(
             'status' => False
           ));
         }
-      ?>
+      ?>;window.productionMode = <%= htmlWebpackPlugin.options.production %>;
     </script>
   </head>
   <body>

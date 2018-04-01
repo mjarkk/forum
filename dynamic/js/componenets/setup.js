@@ -151,7 +151,8 @@ class Setup extends Component {
                       username: this.state.SQLusername,
                       password: this.state.SQLpassword,
                       server: this.state.SQLserver,
-                      databasename: this.state.SQLdatabaseName
+                      databasename: this.state.SQLdatabaseName,
+                      dev: !window.productionMode
                     }
                   })
                 }}>Setup Database</button>

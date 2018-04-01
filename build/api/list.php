@@ -48,6 +48,18 @@ if ($data['status'] && isset($data['data'][0])) {
     'lists' => $list,
     'messagesStatus' => isset($data['data'][0])
   ));
+} elseif ($data['status']) {
+  echo json_encode(array(
+    'title' => $listname,
+    'messages' => array(),
+    'lists' => array(),
+    'messagesStatus' => isset($data['data'][0])
+  ));
 } else {
-  echo json_encode($report);
+  echo json_encode(array(
+    'status' => False,
+    'why' => 'this lists doesn\'t exsist or is empty',
+    'short' => 'EmptyOrAway',
+    'report' => $report
+  ));
 }

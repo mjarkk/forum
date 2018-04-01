@@ -4,6 +4,10 @@
 include_once './imports.php';
 
 function CreateTables() {
+  // setup database:
+  // - Create `votes`, `list`, `messages` and `users` tabels
+  // - Add user with username and password from database
+  // - Add default lists for the home page
   if ($GLOBALS['settings']['setup']) {
     $toCreate = array(
       'votes' => array(
@@ -101,18 +105,60 @@ function CreateTables() {
   }  
 }
 
+function envFileSetup () {
+  // create the env file,
+  // re-create env.php if the server is not in development mode
+  // create .env file if the server is in development mode
+  if ($_POST['dev'] == 'true') {
+    $my_file = '.env';
+    $fileHandeler = fopen($my_file, 'w') or die(json_encode(array('status' => False, 'why' => 'can\'t create .env file')));
+    $data = json_encode(array(
+      "SQLpassword" => $_POST['password'],
+      "SQLusername" => $_POST['username'],
+      "SQLserver" => $_POST['server'],
+      "SQLdatabaseName" => $_POST['databasename']
+    ));
+    fwrite($fileHandeler, $data);
+    fclose($fileHandeler);
+  } else {
+    $my_file = 'env.php';
+    $fileHandeler = fopen($my_file, 'w') or die(json_encode(array('status' => False, 'why' => 'can\'t create .env file')));
+    $data = "
+      <?php
+      \$env = array(
+        'SQLusername' => '" . str_replace("'". "\\'" . $_POST['username']) . "',
+        'SQLpassword' => '" . str_replace("'". "\\'" . $_POST['password']) . "',
+        'SQLserver' => '" . str_replace("'". "\\'" . $_POST['server']) . "',
+        'SQLdatabaseName' => '" . str_replace("'". "\\'" . $_POST['databasename']) . "'
+      );
+    ";
+    fwrite($fileHandeler, $data);
+    fclose($fileHandeler);
+  }
+  return array('status' => True);
+}
+
 if (
   !$report['ENV'] // check if there is no env data if there is make sure no-one can break in
   && $_SERVER['REQUEST_METHOD'] === 'POST' 
-  && isset($_POST['username'])
-  && isset($_POST['password'])
-  && isset($_POST['server'])
-  && isset($_POST['databasename'])
-  && $_POST['username'] != ''
-  && $_POST['server'] != ''
-  && $_POST['databasename'] != ''
+  && isset($_POST['username']) 
+  && isset($_POST['password']) 
+  && isset($_POST['server']) 
+  && isset($_POST['databasename']) 
+  && isset($_POST['dev']) 
+  && $_POST['username'] != '' 
+  && $_POST['server'] != '' 
+  && $_POST['databasename'] != '' 
 ) {
-  echo json_encode(CreateTables());
+  $DBSetup = CreateTables();
+  if (!$DBSetup['status']) {
+    echo json_encode($DBSetup); 
+  } else {
+    $FileTest = envFileSetup();
+    echo json_encode($FileTest);
+  }
+} elseif ($report['ENV']) {
+  echo json_encode(array('status' => False, 'why' => 'can\'t run setup because it\'s already ran'));
 } else {
   echo json_encode(array('status' => False, 'why' => 'post data is wrong'));
 }

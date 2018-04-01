@@ -10,7 +10,6 @@ Make a forum as school project build with [React](https://reactjs.org/) and [PHP
 - now follow `Setup Build` or `Setup Dev`
 
 ## Setup Build
-- Change `build/api/env.php` to your database info  
 - Copy the `build` folder to your webserver  
 
 ## Setup Dev
@@ -20,22 +19,12 @@ location ~ (\.env) {
   return 404;
 }
 ```  
-- Or in case of an apache server move the .htaccess to the root of your webserver  
-- Create: `build/api/.env`  
-- With This data:  
-```JSON
-{
-  "SQLpassword": "password",
-  "SQLusername": "username",
-  "SQLserver": "localhost",
-  "SQLdatabaseName": "forum"
-}
-```  
-- Make a softlink from `build` to you'r webserver  
+- Or in case of an apache server move the .htaccess to the root of your webserver
+- Make a softlink from `build` to you'r webserver or just copy the folder after the build has completed
 
 ## To Do
 - user
-  - login process
+  - ~~login process~~ :heavy_check_mark:
   - ~~login style~~ :heavy_check_mark:
   - register style
   - register process
