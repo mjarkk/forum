@@ -397,6 +397,37 @@ button
   justify-content center
   align-items center
   background-color Background
+  .overlay
+    div
+      height 100vh
+      width 100vw
+      position fixed
+      display block
+      top 0px
+      left 0px
+      background-color rgba(245,245,246,0.4)
   .container
     width 100vw
-    max-width 500px
+    max-width 300px
+    .progress
+      margin: 10px 20px
+      height 4px
+      background-color: BackgroundDark
+      div
+        background-color: Primary
+        height 4px
+        transition 0.3s width
+    .part
+      display flex
+      justify-content center
+      align-items center
+      flex-direction column
+      .errorText
+        color #F44336
+        padding: 10px 0px
+        font-weight: 600
+      button
+        margin-top 10px
+      .accoundInf
+        width 100%
+        margin-top 10px

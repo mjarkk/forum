@@ -16,7 +16,8 @@ class Setup extends Component {
       SQLusername: '',
       SQLserver: '',
       SQLdatabaseName: '',
-      blockinput: false
+      blockinput: false,
+      SQLerror: ''
     }, inputs)
     this.callback = inputs.callback || (() => {})
   }
@@ -54,6 +55,8 @@ class Setup extends Component {
             : (this.state.part == 1) ?
               <div className="part part2">
                 <h2>Sql info</h2>
+                <p>Voordat je verder gaat zorg ervoor dat je een database hebt aangemaakt met een naam naar jou keuze</p>
+                { this.state.SQLerror ? <p className="errorText">{this.state.SQLerror}</p> : ''}
                 <MDinput 
                   label="sql password" 
                   type="text" 
@@ -82,26 +85,75 @@ class Setup extends Component {
                     SQLdatabaseName: data
                   })} 
                 />
-                <button onClick={() => {
-                  this.setState({
-                    part: 2
-                  })
-                }}>Check & volgende</button>
+                <button 
+                  disabled={!this.state.SQLusername || !this.state.SQLserver || !this.state.SQLdatabaseName}
+                  onClick={() => {
+                    this.setState({
+                      blockinput: true
+                    })
+                    functions.fetch('./api/checksetup.php', 'json', data => {
+                      log(data)
+                      if (data.status) {
+                        this.setState({
+                          part: 2,
+                          blockinput: false
+                        })
+                      } else {
+                        this.setState({
+                          blockinput: false,
+                          SQLerror: `${data.why}, ${data.long}`
+                        })
+                      }
+                    }, {
+                      ache: 'no-cache',
+                      method: 'POST',
+                      body: {
+                        username: this.state.SQLusername,
+                        password: this.state.SQLpassword,
+                        server: this.state.SQLserver,
+                        databasename: this.state.SQLdatabaseName
+                      }
+                    })
+                  }}
+                >Check & volgende</button>
               </div>
             : 
               <div className="part part3">
                 <h2>De database is correct</h2>
                 <p>Alle data is goed ingevult klik op Setup Database om de database in te richten en basis data toe te voeggen</p>
-                <div>
+                <div className="accoundInf">
                   <h3>Jou accound</h3>
                   <p>Username: <span>{this.state.SQLusername}</span></p>
                   <p>Password: <span>{this.state.SQLpassword}</span></p>
                 </div>
                 <button onClick={() => {
                   this.setState({
-                    part: 3
+                    blockinput: true
                   })
-                  this.callback(false)
+                  functions.fetch('./api/setup.php', 'json', data => {
+                    log(data)
+                    if (data.status) {
+                      this.setState({
+                        // part: 3,
+                        blockinput: false
+                      }, () => {
+                        // this.callback(false)
+                      })
+                    } else {
+                      this.setState({
+                        blockinput: false
+                      })
+                    }
+                  }, {
+                    ache: 'no-cache',
+                    method: 'POST',
+                    body: {
+                      username: this.state.SQLusername,
+                      password: this.state.SQLpassword,
+                      server: this.state.SQLserver,
+                      databasename: this.state.SQLdatabaseName
+                    }
+                  })
                 }}>Setup Database</button>
               </div>
             }

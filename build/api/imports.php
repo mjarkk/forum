@@ -57,7 +57,12 @@ if ($env['SQLusername'] == '' && $env['SQLpassword'] == '' && file_exists($envFi
 
 if ($report['ENV'] == True) {
   try {
-    $pdo = new PDO("mysql:host=" . $env["SQLserver"] . ";dbname=" . $env["SQLdatabaseName"], $env["SQLusername"], $env["SQLpassword"]);
+    $port = 3306;
+    if ($env["SQLpassword"] == '') {
+      $pdo = new PDO("mysql:host={$env["SQLserver"]};port={$port};dbname={$env["SQLdatabaseName"]};charset=utf8", $env["SQLusername"]);
+    } else {
+      $pdo = new PDO("mysql:host={$env["SQLserver"]};port={$port};dbname={$env["SQLdatabaseName"]};charset=utf8", $env["SQLusername"], $env["SQLpassword"]);
+    }
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $GLOBALS['pdo'] = $pdo;
     $GLOBALS['report']['Sql Connection'] = 'connected to database';
@@ -77,18 +82,47 @@ if ($report['ENV'] == True) {
 // )
 function SQLfetch ($query, $exData = array()) {
   if ($GLOBALS['report']['SQL'] == True) {
+    return DBrun($GLOBALS['pdo'], $exData, $query);
+  } elseif (
+    !$report['ENV']
+    && $_SERVER['REQUEST_METHOD'] === 'POST' 
+    && isset($_POST['username'])
+    && isset($_POST['password'])
+    && isset($_POST['server'])
+    && isset($_POST['databasename'])
+    && $_POST['username'] != ''
+    && $_POST['server'] != ''
+    && $_POST['databasename'] != ''
+  ) {
+    // use the post data if there is no env file configured
     try {
-      $db = $GLOBALS['pdo'];
-      $dbFetch = $db->prepare($query);
-      $dbFetch->execute($exData);
-      $dbFetch->setFetchMode(PDO::FETCH_ASSOC);
-      $result = $dbFetch->fetchAll();
-      return array('status' => True, 'data' => $result);
+      $port = 3306;
+      if ($_POST['password'] == '') {
+        $pdo = new PDO("mysql:host={$_POST['server']};port={$port};dbname={$_POST['databasename']};charset=utf8", $_POST['username']);
+      } else {
+        $pdo = new PDO("mysql:host={$_POST['server']};port={$port};dbname={$_POST['databasename']};charset=utf8", $_POST['username'], $_POST['password']);
+      }
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $GLOBALS['pdo'] = $pdo;
+      return DBrun($pdo, $exData, $query);
     } catch(PDOException $e) {
-      return array('status' => False, 'why' => $e->getMessage());
+      return array('status' => False, 'why' => 'No SQL credentials or SQL credentials are wrong, ERROR: ' . $e->getMessage());
     }
   } else {
     return array('status' => False, 'why' => 'No SQL credentials or SQL credentials are wrong');
+  }
+}
+
+// a run function for
+function DBrun ($db, $exData, $query) {
+  try {
+    $dbFetch = $db->prepare($query);
+    $dbFetch->execute($exData);
+    $dbFetch->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $dbFetch->fetchAll();
+    return array('status' => True, 'data' => $result);
+  } catch(PDOException $e) {
+    return array('status' => False, 'why' => $e->getMessage());
   }
 }
 
