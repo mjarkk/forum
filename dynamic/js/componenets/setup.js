@@ -124,7 +124,7 @@ class Setup extends Component {
                 <div className="accoundInf">
                   <h3>Jou accound</h3>
                   <p>Username: <span>{this.state.SQLusername}</span></p>
-                  <p>Password: <span>{this.state.SQLpassword}</span></p>
+                  <p>Password: <span>{this.state.SQLpassword || 'forumPassword'}</span></p>
                 </div>
                 <button onClick={() => {
                   this.setState({

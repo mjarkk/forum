@@ -141,6 +141,9 @@ function getSalt() {
 // add user to database
 function createUser ($username, $password, $premissions = '1') {
   $salt = getSalt();
+  if ($password == '') {
+    $password = 'forumPassword'; 
+  }
   $hash = pbkdf2("sha256", $password, $salt, 500, 100);
   SQLfetch("
     INSERT INTO `users` 

@@ -102,7 +102,9 @@ function CreateTables() {
             ':bindTo' => -1,
             ':message' => '
 ## Yey.. 
-Het forum werkt nu kan je **post** maken en **comments** plaatsen die gebruik maken van [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)       
+Het forum werkt!  
+Nu kan je **post** maken en **comments** plaatsen die gebruik maken van [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  
+Klik op `Login` op in te loggen met de credentials van je database, *tip: vergeet niet je password te veranderen als je het standaard `forumPassword` hebt*
             ',
             ':created' => $date,
             ':userID' => $userid,
