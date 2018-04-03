@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MDsettings from 'react-icons/lib/md/settings'
+import {functions} from '../imports/functions.js'
 
 const log = console.log
 
@@ -13,6 +14,7 @@ class BigMenu extends Component {
       display: false,
       LoginStatus: inputs.LoginStatus
     }
+    this.onUserDataChange = inputs.onUserDataChange || (() => {})
     menu = this
   }
   componentWillReceiveProps(inputs) {
@@ -58,6 +60,20 @@ class BigMenu extends Component {
               <h2>{ this.state.LoginStatus.userData.username }</h2>
               <p>Comments: <span>{ this.state.LoginStatus.userData.comments }</span></p>
               <p>Karma: <span>{ 0 }</span></p>
+              <button 
+                onClick={() => {
+                  functions.fetch('./api/logout.php', 'json', data => {
+                    if (data.status) {
+                      this.onUserDataChange({
+                        logedin: false
+                      })
+                    }
+                  }, {
+                    cache: 'no-cache',
+                    method: 'POST'
+                  })
+                }}
+              >Logout</button>
             </div>
           : 
             <div className="proviel">

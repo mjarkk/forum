@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import MDface from 'react-icons/lib/md/face'
 import MDmenu from 'react-icons/lib/md/menu'
+import MDback from 'react-icons/lib/md/arrow-back'
 
 // component imports
 import List from './componenets/list.js'
@@ -31,9 +32,18 @@ class App extends Component {
     return (
       <div className="mainApp">
         <div className="header">
-          <MDmenu onClick={(e) => {
-            menuHandeler(true)
-          }} size={35} /><h1>{this.state.title}</h1>
+          { this.state.show == 'list' ?
+            <MDmenu onClick={e => {
+              menuHandeler(true)
+            }} size={35} />
+          : 
+            <MDback onClick={e => {
+              this.setState({
+                show: 'list'
+              })
+            }} size={35} />
+          }
+          <h1>{this.state.title}</h1>
         </div>
         { (this.state.show == 'list') ? 
             <div className="listWrapper">
@@ -45,10 +55,15 @@ class App extends Component {
         }
         
         <BigMenu 
-          LoginStatus={this.state.LoginStatus} 
+          LoginStatus={this.state.LoginStatus}
+          onUserDataChange={newData => {
+            let toSet = this.state
+            toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
+            this.setState(toSet)
+          }}
         />
         <LoginRegister 
-          onUserDataChange={(newData) => {
+          onUserDataChange={newData => {
             let toSet = this.state
             toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
             this.setState(toSet)

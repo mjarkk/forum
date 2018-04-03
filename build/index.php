@@ -11,11 +11,11 @@
     <title>Forum</title>
     
       
-        <link rel="preload" href="js/aa0a557da8daf3ba55e6.bundel.js?aa0a557da8daf3ba55e6" as="script"> <!-- preload the scripts -->
+        <link rel="preload" href="js/78d62c0af31d7aaac0c2.bundel.js?78d62c0af31d7aaac0c2" as="script"> <!-- preload the scripts -->
       
     
       
-        <script>window.testFile = "js/aa0a557da8daf3ba55e6.tests.js?aa0a557da8daf3ba55e6"</script>
+        <script>window.testFile = "js/78d62c0af31d7aaac0c2.tests.js?78d62c0af31d7aaac0c2"</script>
       
     
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -61,7 +61,7 @@
     <div id="root"></div>
     
       
-        <script src="js/aa0a557da8daf3ba55e6.bundel.js?aa0a557da8daf3ba55e6"></script>
+        <script src="js/78d62c0af31d7aaac0c2.bundel.js?78d62c0af31d7aaac0c2"></script>
       
     
       

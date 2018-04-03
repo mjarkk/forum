@@ -35,6 +35,7 @@ class List extends Component {
             })
           } else {
             // the database works 50%
+            // give error to screen or check if this just issn't a forum list without posts or sub lists
           }
         }
       }

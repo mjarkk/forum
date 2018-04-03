@@ -32,8 +32,25 @@ const ListItem = (props) =>
       <div className="msgTitle">{ props.title }</div>
       <div className="msg" dangerouslySetInnerHTML={{__html: snarkdown(escapeHtml(props.msg))}}></div>
       <div className="btns">
-        <button><MDcomment size={25} /></button>
-        <button><MDshare size={25} /></button>
+        {/* <button><MDcomment size={25} /></button> */}
+        { navigator.share ? 
+          <button
+            onClick={() => {
+              let title = message.state.beginMsg.title
+              let url = location.href // TODO: add better link not a copy of the url bar for a more safe share
+              let text = document.createElement('div')
+              text.innerHTML = snarkdown(escapeHtml(props.msg))
+              text = text.innerText
+              if (navigator.share) {
+                navigator.share({
+                  title: title,
+                  text: text,
+                  url: url
+                })
+              }
+            }}
+          ><MDshare size={25} /></button>
+        : ''}
         {(props.LoginStatus.logedin && props.LoginStatus.userData.username == props.username && typeof props.id != 'undefined') ? 
           <button
             onClick={() => {
