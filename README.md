@@ -26,18 +26,17 @@ location ~ (\.env) {
 - user
   - ~~login process~~ :heavy_check_mark:
   - ~~login style~~ :heavy_check_mark:
-  - register style
-  - register process
+  - ~~register style~~ :heavy_check_mark:
+  - ~~register process~~ :heavy_check_mark:
   - user settings
   - set user proviel picture
 - message
   - ~~message itself~~ :heavy_check_mark:
-  - add reactions to messages
+  - ~~add reactions to messages~~ :heavy_check_mark:
   - user icon
-  - react to the message
+  - quote message in reaction
   - ~~markdown support~~ :heavy_check_mark:
   - add things to markdown
-  - save fetches to indexedDB or local storage
   - scroll and load more data
 - menu
   - make working links
@@ -52,7 +51,5 @@ location ~ (\.env) {
   - service worker
   - manifest
   - a wrapper around fetch that re-fetches automaticly when it fails or gets the data from the cache if it's available
-  - a good score in lighthouse chrome dev tool -> Audits
-
-## Maybe?
-- Add docker setup file
+  - a good score in lighthouse chrome dev tool -> Audits 
+  - save fetches to indexedDB or local storage

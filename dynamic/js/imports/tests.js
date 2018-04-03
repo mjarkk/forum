@@ -6,8 +6,8 @@ let addScript = () => {
   document.head.appendChild(toAdd)
 }
 
-if (testFile) {
-fetch('http://localhost:9343/script.js')
+if (!productionMode) {
+  fetch('http://localhost:9343/script.js')
   .then(res => res.json())
   .then(data => {
     if (data.status) {addScript()}

@@ -61,3 +61,4 @@ typings/
 build/js/*
 build/style/*
 build/**/*.html
+build/*.php
