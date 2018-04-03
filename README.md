@@ -5,14 +5,15 @@ Make a forum as school project build with [React](https://reactjs.org/) and [PHP
 - Install [node.js](https://nodejs.org/en/)
 - `npm i -g webpack webpack-cli yarn` (on linux and macOS you might need to add `sudo`)
 - `yarn`
-- `yarn build`
-- Add a SQL database
-- now follow `Setup Build` or `Setup Dev`
+- Add a SQL database 
+- now follow `Setup Build` or `Setup Dev` depending on your situation
 
 ## Setup Build
+- `yarn build`
 - Copy the `build` folder to your webserver  
 
 ## Setup Dev
+- `yarn dev`
 - Add to the nginx virtual server config:  
 ```BASH
 location ~ (\.env) { 

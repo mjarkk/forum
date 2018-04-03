@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 
-const production = false
+const production = process.env.npm_lifecycle_event == 'build'
 
 let pathsToClean = [
   'js'

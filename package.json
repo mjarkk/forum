@@ -6,7 +6,8 @@
   "author": "Mark Kopenga <mkopenga@gmail.com>",
   "license": "GPL-3.0",
   "scripts": {
-    "build": "webpack --watch --progress --config \"webpack.config.js\"",
+    "build": "webpack --progress --config \"webpack.config.js\"",
+    "dev": "webpack --watch --progress --config \"webpack.config.js\"",
     "test": "ava test.js --color",
     "funtest": "ava test.js --tap | tap-nyan"
   },
