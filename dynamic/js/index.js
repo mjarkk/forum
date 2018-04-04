@@ -6,10 +6,11 @@ import MDmenu from 'react-icons/lib/md/menu'
 import MDback from 'react-icons/lib/md/arrow-back'
 
 // component imports
-import List from './componenets/list.js'
 import BigMenu, { menuHandeler } from './componenets/menu.js'
-import Message from './componenets/message.js'
 import LoginRegister, { LoginStatus } from './componenets/userhandeler.js'
+import List from './componenets/list.js'
+import Message from './componenets/message.js'
+import Settings from './componenets/settings.js'
 
 // style imports
 import '../stylus/style.styl'
@@ -20,11 +21,12 @@ import tests from './imports/tests.js'
 const log = console.log
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(inputs) {
+    super(inputs)
     this.state = {
       title: 'forum',
       show: 'list',
+      list: 0,
       LoginStatus
     }
   }
@@ -32,7 +34,7 @@ class App extends Component {
     return (
       <div className="mainApp">
         <div className="header">
-          { this.state.show == 'list' ?
+          { (this.state.show == 'list') ?
             <MDmenu onClick={e => {
               menuHandeler(true)
             }} size={35} />
@@ -49,6 +51,7 @@ class App extends Component {
             <div className="listWrapper">
               <List 
                 LoginStatus={this.state.LoginStatus} 
+                list={this.state.list}
               />
             </div>
           : ''
@@ -57,28 +60,31 @@ class App extends Component {
         <BigMenu 
           LoginStatus={this.state.LoginStatus}
           onUserDataChange={newData => {
-            let toSet = this.state
-            toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
-            this.setState(toSet)
+            this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, newData)})
           }}
         />
         <LoginRegister 
           onUserDataChange={newData => {
-            let toSet = this.state
-            toSet.LoginStatus = Object.assign({}, toSet.LoginStatus, newData)
-            this.setState(toSet)
+            this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, newData)})
           }}
         />
         <Message 
           LoginStatus={this.state.LoginStatus} 
           show={this.state.show == 'message'} 
           onShow={(data) => {
-            // this function will be run when the post need to be shown
             this.setState({
               show: 'message'
             })
           }}
         />
+        {(this.state.show == 'settings') ? 
+          <Settings
+            LoginStatus={this.state.LoginStatus}
+            onUserDataChange={() => {
+              this.setState(Object.assign({}, this.state.LoginStatus, newData))
+            }}
+          />
+        : ''}
       </div>
     )
   }

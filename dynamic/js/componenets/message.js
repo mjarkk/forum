@@ -132,8 +132,13 @@ class Message extends Component {
         el.onclick = (ev) => {
           ev.preventDefault()
           let newPopup = this.state.popup
-          newPopup.url = ev.target.href
-          if (ev.target.href.toLowerCase().indexOf('http:') >= 0) {
+          newPopup.url = (ev.target && ev.target.href) ? ev.target.href : 'http://'
+          Array(...ev.path).reverse().map(el => {
+            if (el.href) {
+              newPopup.url = el.href
+            }
+          })
+          if (newPopup.url.toLowerCase().indexOf('http:') >= 0) {
             newPopup.title = 'Deze link is niet vijlig'
             newPopup.msg = 'Deze site heeft geen SSL certificaat waardoor het verkeer niet ge-encrypt is'
             newPopup.open = true
@@ -205,17 +210,19 @@ class Message extends Component {
             />
           : ''} 
 
-          {this.state.reactions.map((el, id) => 
-            <ListItem
-              key={id}
-              created={el.created}
-              username={el.username}
-              msg={el.msg}
-              LoginStatus={this.state.LoginStatus}
-              id={el.id}
-              arrayID={id}
-            />
-          )}
+          {(this.state.beginMsg.id != '-1') ? 
+            this.state.reactions.map((el, id) => 
+              <ListItem
+                key={id}
+                created={el.created}
+                username={el.username}
+                msg={el.msg}
+                LoginStatus={this.state.LoginStatus}
+                id={el.id}
+                arrayID={id}
+              />
+            )
+          : ''} 
 
           { (this.state.LoginStatus.logedin) ? 
             <div className={(this.state.beginMsg.id == '-1' ? 'newMessage ' : '') + 'comment'}>

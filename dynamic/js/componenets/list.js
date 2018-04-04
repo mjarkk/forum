@@ -15,31 +15,50 @@ class List extends Component {
       forumName: '',
       LoginStatus: inputs.LoginStatus,
       showSetup: false,
+      list: inputs.list
     }
-    functions.fetch(
-      './api/list.php?what=0',
-      'json',
-      (data) => {
-        if (data.status && typeof data.data.SQL == 'undefined' && typeof data.data.DB == 'undefined' && typeof data.data.ENV == 'undefined') {
-          let jsonData = data.data
-          this.setState({
-            subForums: jsonData.lists,
-            messages: jsonData.messages,
-            forumName: jsonData.title
-          })
-        } else {
-          let status = data.report
-          if(status && !status.DB && !status.ENV && !status.SQL) {
+    this.fetchList(inputs.list || 0)
+  }
+  shouldComponentUpdate /* lol yes :D */ (inputs) {
+    if (inputs.LoginStatus.logedin != this.state.LoginStatus.logedin) {
+      this.setState({
+        LoginStatus: inputs.LoginStatus
+      })
+    }
+    if (inputs.list != this.state.list && typeof inputs.list == 'number') {
+      this.fetchList(inputs.list)
+    }
+    return true
+  }
+  fetchList(listNumber) {
+    if (!isNaN(+listNumber) && typeof +listNumber == 'number') {
+      functions.fetch(
+        './api/list.php?what=' + listNumber,
+        'json',
+        (data) => {
+          if (data.status && typeof data.data.SQL == 'undefined' && typeof data.data.DB == 'undefined' && typeof data.data.ENV == 'undefined') {
+            let jsonData = data.data
             this.setState({
-              showSetup: true
+              subForums: jsonData.lists,
+              messages: jsonData.messages,
+              forumName: jsonData.title
             })
           } else {
-            // the database works 50%
-            // give error to screen or check if this just issn't a forum list without posts or sub lists
+            let status = data.report
+            if(status && !status.DB && !status.ENV && !status.SQL) {
+              this.setState({
+                showSetup: true
+              })
+            } else {
+              // the database works 50%
+              // give error to screen or check if this just issn't a forum list without posts or sub lists
+            }
           }
         }
-      }
-    )
+      )
+    } else {
+      log('the list to fetch is not a falid input:',listNumber)
+    }
   }
   render() {
     return (

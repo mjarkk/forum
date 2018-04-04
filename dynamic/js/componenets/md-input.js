@@ -9,7 +9,7 @@ class MLinput extends Component {
     {}, {
       focus: false,
       id: this.randomString(30),
-      inputdata: '',
+      inputdata: inputs.defualt || '',
       focust: false
     }, inputs)
   }
