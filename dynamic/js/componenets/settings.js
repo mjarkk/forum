@@ -9,13 +9,29 @@ class Settings extends Component {
     super(inputs)
     this.state = {
       LoginStatus: inputs.LoginStatus,
-      canChangeUser: inputs.LoginStatus.logedin ? [
-        {name: 'username', input: inputs.LoginStatus.userData.username}
-      ] : []
+      sendingData: true,
+      canChangeUser: this.getoptionsarr(inputs.LoginStatus)
     }
   }
+  getoptionsarr(LoginStatus) {
+    return (LoginStatus.logedin ? [
+      {
+        name: 'Username', 
+        shortName: 'username',
+        err: '',
+        type: 'input',
+        input: LoginStatus.userData.username
+      },{
+        name: 'New password',
+        shortName: 'password',
+        err: '',
+        type: 'input',
+        input: ''
+      }
+    ] : [])
+  }
   componentDidUpdate(inputs) {
-    
+    return true
   }
   render() {
     if (this.state.LoginStatus.logedin) {
@@ -24,16 +40,28 @@ class Settings extends Component {
           <div className="settings">
             <h2>Settings</h2>
             <div className="section userSection">
-              {this.state.canChangeUser.map((el, id) => 
+              <h3>User settings</h3>
+              {this.state.canChangeUser.map((el, id) =>
                 <div className="row" key={id}>
+                  <div className="error">{el.err}</div>
                   <div className="name">{el.name}</div>
-                  <MDinput 
-                    label={el.name}
-                    defualt={el.input}
-                    onChange={newdata => el.input}
-                  />
+                  { (el.type == 'input') ?
+                    <MDinput 
+                      label={el.name}
+                      defualt={el.input}
+                      type={(el.shortName == 'password') ? 'password' : 'text'}
+                      onChange={newdata => el.input}
+                    />
+                  : '' }
                 </div>
               )}
+              <button
+                disabled={!this.state.sendingData}
+                onClick={() => {
+                  let tosend = JSON.stringify(this.state.canChangeUser)
+                  log(tosend)
+                }}
+              >Update</button>
             </div>
             {this.state.LoginStatus.userData.premission == '3' ? 
               <div className="section adminSection">

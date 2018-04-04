@@ -14,6 +14,7 @@ class BigMenu extends Component {
       display: false,
       LoginStatus: inputs.LoginStatus
     }
+    this.showChange = inputs.showChange || (() => {})
     this.onUserDataChange = inputs.onUserDataChange || (() => {})
     menu = this
   }
@@ -85,7 +86,10 @@ class BigMenu extends Component {
           }
           <div className="listLinks">
             { (this.state.LoginStatus.logedin) ? 
-              <div className="link">  
+              <div 
+                onClick={() => this.showChange('settings')}
+                className="link"
+              >  
                 <MDsettings />
                 <p>Settings</p>
               </div>

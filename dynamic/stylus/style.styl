@@ -29,6 +29,7 @@ Shadow5 = 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
 body
   font-family 'Roboto', sans-serif
   background-color BackgroundDark
+  overflow-x hidden
   
 button
   padding 5px 15px
@@ -153,6 +154,10 @@ button
         font-weight normal
         span
           font-weight bolder
+      button
+        position relative
+        top 10px
+        left -5px
     .listLinks
       .link
         padding 20px 10px
@@ -446,3 +451,23 @@ button
     width 100%
     max-width 600px
     box-sizing border-box
+    h2
+      margin-bottom 5px
+      padding-bottom 5px
+    .section
+      border-top 2px solid #ccc
+      padding 10px 0px
+      .row
+        display flex
+        justify-content space-between
+        flex-wrap wrap
+        .error
+          min-width 100%
+        .name
+          display flex
+          justify-content center
+          align-items center
+          font-size 19px
+        .ml-input-holder
+          position relative
+          top -10px
