@@ -12,6 +12,7 @@ class Settings extends Component {
       sendingData: true,
       canChangeUser: this.getoptionsarr(inputs.LoginStatus)
     }
+    this.onUserDataChange = inputs.onUserDataChange || (() => {})
   }
   getoptionsarr(LoginStatus) {
     return (LoginStatus.logedin ? [
@@ -50,7 +51,13 @@ class Settings extends Component {
                       label={el.name}
                       defualt={el.input}
                       type={(el.shortName == 'password') ? 'password' : 'text'}
-                      onChange={newdata => el.input}
+                      onChange={newdata => {
+                        let newData = this.state.canChangeUser
+                        newData[id].input = newdata
+                        this.setState({
+                          canChangeUser: newData
+                        })
+                      }}
                     />
                   : '' }
                 </div>
@@ -59,7 +66,30 @@ class Settings extends Component {
                 disabled={!this.state.sendingData}
                 onClick={() => {
                   let tosend = JSON.stringify(this.state.canChangeUser)
-                  log(tosend)
+                  this.setState({
+                    canChangeUser: this.state.canChangeUser.map(el => Object.assign({}, el, {err: ''}))
+                  })
+                  functions.fetch('./api/updatesettings.php', 'json', data => {
+                    if (data.status) {
+                      if (data.userdata.status) {
+                        this.onUserDataChange(data.userdata.data)
+                      }
+                    } else if (data.errors) {
+                      let errors = data.errors.map(el => el.short)
+                      this.setState({
+                        canChangeUser: this.state.canChangeUser.map(el => {
+                          let check = errors.indexOf(el.shortName)
+                          return Object.assign({}, el, {err: (check != -1) ? data.errors[check].text : ''})
+                        })
+                      })
+                    }
+                  }, {
+                    cache: 'no-cache',
+                    method: 'POST',
+                    body: {
+                      newData: tosend
+                    }
+                  })
                 }}
               >Update</button>
             </div>

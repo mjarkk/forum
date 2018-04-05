@@ -60,30 +60,30 @@ class App extends Component {
         <BigMenu 
           LoginStatus={this.state.LoginStatus}
           showChange={newdata => this.setState({show: newdata})}
-          onUserDataChange={newData => {
+          onUserDataChange={newData => 
             this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, newData)})
-          }}
+          }
         />
         <LoginRegister 
-          onUserDataChange={newData => {
+          onUserDataChange={newData => 
             this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, newData)})
-          }}
+          }
         />
         <Message 
           LoginStatus={this.state.LoginStatus} 
           show={this.state.show == 'message'} 
-          onShow={(data) => {
+          onShow={(data) => 
             this.setState({
               show: 'message'
             })
-          }}
+          }
         />
         {(this.state.show == 'settings') ? 
           <Settings
             LoginStatus={this.state.LoginStatus}
-            onUserDataChange={() => {
-              this.setState(Object.assign({}, this.state.LoginStatus, newData))
-            }}
+            onUserDataChange={newData => 
+              this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, {userData: newData})})
+            }
           />
         : ''}
       </div>

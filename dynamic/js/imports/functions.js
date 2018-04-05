@@ -19,6 +19,16 @@ export const functions = {
     // type: data type to resonse `string` = ("json" or "text")
     // callback: send the callback data `function`
 
+    // functions.fetch('/url/.json', 'json', (data) => {
+    // 
+    // }, {
+    //   cache: 'no-cache',
+    //   method: 'POST',
+    //   body: {
+    //   
+    //   }
+    // })
+
     if (!url) {
       // if the url is not set return undefined
       return false
