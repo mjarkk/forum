@@ -62,3 +62,5 @@ build/js/*
 build/style/*
 build/**/*.html
 build/index.php
+build/message.php
+build/settings.php
