@@ -18,6 +18,15 @@ let cleanOptions = {
   dry: false
 }
 
+let htmlTemplate = {
+  production: production,
+  title: 'Forum',
+  inject: false,
+  hash: true,
+  filename: 'index.php',
+  template: 'dynamic/index.php',
+}
+
 module.exports = {
   entry: {
     // only include the tests.js when it's needed
@@ -57,14 +66,21 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': (production) ? '"production"' : '"development"'
     }),
-    new HtmlWebpackPlugin({
-      production: production,
-      title: 'Forum',
-      inject: false,
-      hash: true,
-      filename: 'index.php',
-      template: 'dynamic/index.php',
-    })
+    new HtmlWebpackPlugin(
+      Object.assign({}, htmlTemplate, {
+        filename: 'index.php'
+      })
+    ),
+    new HtmlWebpackPlugin(
+      Object.assign({}, htmlTemplate, {
+        filename: 'message.php'
+      })
+    ),
+    new HtmlWebpackPlugin(
+      Object.assign({}, htmlTemplate, {
+        filename: 'settings.php'
+      })
+    )
   ],
   stats: {
     colors: true

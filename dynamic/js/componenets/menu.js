@@ -34,7 +34,7 @@ class BigMenu extends Component {
     }, 1)
   }
   close(ev) {
-    if (ev.target.className == 'bigMenu') {
+    if ((ev && ev.target && ev.target.className == 'bigMenu') || typeof ev == 'undefined') {
       this.setState({
         opened: false
       })
@@ -87,7 +87,10 @@ class BigMenu extends Component {
           <div className="listLinks">
             { (this.state.LoginStatus.logedin) ? 
               <div 
-                onClick={() => this.showChange('settings')}
+                onClick={() => {
+                  this.showChange('settings')
+                  this.close()
+                }}
                 className="link"
               >  
                 <MDsettings />

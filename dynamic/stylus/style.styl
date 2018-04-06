@@ -457,6 +457,32 @@ button
     .section
       border-top 2px solid #ccc
       padding 10px 0px
+      .users
+        h3
+          padding 10px 5px 5px 5px
+        .user
+          display flex
+          border-bottom 2px solid #ccc
+          padding 4px
+          display flex
+          cursor pointer
+          background-color Background
+          transition 0.2s background-color
+          &:hover
+            background-color BackgroundDark
+          .item
+            min-width 90px
+            max-width 90px
+            overflow: hidden
+          .id
+            min-width 25px
+            max-width 25px
+        .topRow
+          cursor default
+          &:hover
+            background-color Background
+          *
+            font-weight bold
       .row
         display flex
         justify-content space-between

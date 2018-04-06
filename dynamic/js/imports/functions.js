@@ -92,5 +92,8 @@ export const functions = {
           why: err
         })
       })
+  },
+  fake: () => {
+    // a fake function use to make a callback functions happy
   }
 }

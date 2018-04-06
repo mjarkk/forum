@@ -82,17 +82,18 @@ const ListItem = (props) =>
 
 class Message extends Component {
   constructor(inputs) {
-    super()
+    super(inputs)
+    let id = this.getMsgID()
     this.state = {
       waitingServe: false,
       reaction: '',
       startTitle: '',
       opened: inputs.show,
-      id: inputs.msgID,
+      id: id,
       beginMsg: {
         created: '',
         username: '',
-        id : '',
+        id : (id == -1) ? '-1' : '',
         msg : '',
         premission : '',
         title : ''
@@ -107,11 +108,21 @@ class Message extends Component {
       reactions: [],
       LoginStatus: inputs.LoginStatus
     }
-    if (this.state.opened) {
+    if (this.state.opened && this.state.id != -1) {
       this.fetchMsg(this.state.id)
     }
     message = this
     this.onShow = inputs.onShow || (() => {})
+  }
+  getMsgID() {
+    if (location.search && location.search.length > 3) {
+      let test = location.search.split('&')
+      test[0] = test[0].replace('?', '')
+      let id = test.reduce((acc, el) => (el.startsWith('id=') ? Number(el.replace('id=', '')) : acc), 0)
+      return (!!id) ? id.toString() : -1
+    } else {
+      return(-1)
+    }
   }
   popupCallback(buttonID) {
     message.setState({
@@ -126,7 +137,8 @@ class Message extends Component {
     }
   }
   componentDidUpdate (prevProps, prevState) {
-    let aTags = [...document.querySelectorAll('.messageItem .acctualMessage a')]
+    // get all `a` tags in all messages and convert them to a normal array
+    let aTags = [...document.querySelectorAll('.messageItem .acctualMessage a')] 
     aTags.map(el => {
       if (/javascript\:|data\:|http\:/gi.exec(el.href)) {
         el.onclick = (ev) => {
@@ -174,28 +186,29 @@ class Message extends Component {
     this.setState(toSet)
   }
   fetchMsg(id, callback) {
-    const doCallback = () => typeof callback == 'function' ? callback() : false
-    fetch('./api/message.php?id=' + id)
-      .then(res => res.json())
-      .then(jsonData => {
-        if (jsonData.status) {
-          // jsonData.created.msg
+    const doCallback = 
+      (typeof callback == 'function') 
+        ? callback 
+        : functions.fake
+    functions.fetch('./api/message.php?id=' + id, 'json', (data) => {
+      if (data.status) {
+        if (JSON.stringify(data.created)[0] == '{') {
           this.setState({
-            beginMsg: jsonData.created,
-            reactions: jsonData.data
+            beginMsg: data.created,
+            reactions: data.data
           }, () => doCallback())
         } else {
           doCallback()
-          // some error report 
         }
-      })
-      .catch(err => {
-        log(err)
+      } else {
         doCallback()
-      })
+      }
+    }, {
+      cache: 'no-cache'
+    })
   }
   render() {
-    if (this.state.opened) {
+    if (this.state.opened && (this.state.id == -1 || this.state.id == '-1' || this.state.beginMsg.username )) {
       return (
         <div className="mainMessage">
           

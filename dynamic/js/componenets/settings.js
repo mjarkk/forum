@@ -10,9 +10,11 @@ class Settings extends Component {
     this.state = {
       LoginStatus: inputs.LoginStatus,
       sendingData: true,
-      canChangeUser: this.getoptionsarr(inputs.LoginStatus)
+      canChangeUser: this.getoptionsarr(inputs.LoginStatus),
+      users: []
     }
     this.onUserDataChange = inputs.onUserDataChange || (() => {})
+    this.getUsers()
   }
   getoptionsarr(LoginStatus) {
     return (LoginStatus.logedin ? [
@@ -33,6 +35,16 @@ class Settings extends Component {
   }
   componentDidUpdate(inputs) {
     return true
+  }
+  getUsers() {
+    functions.fetch('./api/userlist.php', 'json', data => {
+      if (data.status) {
+        this.setState({users: data.data})
+      }
+    }, {
+      cache: 'no-cache',
+      method: 'POST'
+    })
   }
   render() {
     if (this.state.LoginStatus.logedin) {
@@ -95,7 +107,21 @@ class Settings extends Component {
             </div>
             {this.state.LoginStatus.userData.premission == '3' ? 
               <div className="section adminSection">
-
+                <div className="users">
+                  <h3>Gebruikers</h3>
+                  <div className="user topRow">
+                    <div className="id item">ID</div>
+                    <div className="username item">Username</div>
+                    <div className="premission item">Premission</div>
+                  </div>
+                  {this.state.users.map(el => 
+                    <div key={el.ID} className="user">
+                      <div className="id item">{el.ID}</div>
+                      <div className="username item">{el.username}</div>
+                      <div className="premission item">{el.premission}</div>
+                    </div>
+                  )}
+                </div>
               </div>
             : ''}
           </div>

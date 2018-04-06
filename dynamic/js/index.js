@@ -1,9 +1,10 @@
-// js imports
+// defualt imports
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import MDface from 'react-icons/lib/md/face'
 import MDmenu from 'react-icons/lib/md/menu'
 import MDback from 'react-icons/lib/md/arrow-back'
+import urlhandeler from './imports/urlhandeler.js'
 
 // component imports
 import BigMenu, { menuHandeler } from './componenets/menu.js'
@@ -25,10 +26,16 @@ class App extends Component {
     super(inputs)
     this.state = {
       title: 'forum',
-      show: 'list',
+      show: '',
       list: 0,
       LoginStatus
     }
+    this.urlHandeler = new urlhandeler({
+      changeState: toChagne => this.setState(toChagne),
+      installEv: data => {
+        this.state.show = data
+      }
+    }) 
   }
   render() {
     return (
@@ -43,6 +50,7 @@ class App extends Component {
               this.setState({
                 show: 'list'
               })
+              this.urlHandeler.changePath('/')
             }} size={35} />
           }
           <h1>{this.state.title}</h1>
