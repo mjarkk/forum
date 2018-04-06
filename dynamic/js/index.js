@@ -67,7 +67,12 @@ class App extends Component {
         
         <BigMenu 
           LoginStatus={this.state.LoginStatus}
-          showChange={newdata => this.setState({show: newdata})}
+          showChange={newdata => {
+            if (newdata == 'settings') {
+              this.urlHandeler.changePath('/settings.php')
+            }
+            this.setState({show: newdata})}
+          }
           onUserDataChange={newData => 
             this.setState({LoginStatus: Object.assign({}, this.state.LoginStatus, newData)})
           }
