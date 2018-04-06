@@ -4,8 +4,8 @@ import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 import MDdelete from 'react-icons/lib/md/delete'
 import {functions} from '../imports/functions.js'
-import MDinput from '../componenets/md-input.js'
-import Popup from '../componenets/popup.js'
+import MDinput from '../components/md-input.js'
+import Popup from '../components/popup.js'
 
 const log = console.log
 let message

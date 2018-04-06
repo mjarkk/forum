@@ -7,11 +7,11 @@ import MDback from 'react-icons/lib/md/arrow-back'
 import urlhandeler from './imports/urlhandeler.js'
 
 // component imports
-import BigMenu, { menuHandeler } from './componenets/menu.js'
-import LoginRegister, { LoginStatus } from './componenets/userhandeler.js'
-import List from './componenets/list.js'
-import Message from './componenets/message.js'
-import Settings from './componenets/settings.js'
+import BigMenu, { menuHandeler } from './components/menu.js'
+import LoginRegister, { LoginStatus } from './components/userhandeler.js'
+import List from './components/list.js'
+import Message from './components/message.js'
+import Settings from './components/settings.js'
 
 // style imports
 import '../stylus/style.styl'

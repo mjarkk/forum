@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Setup from '../componenets/setup.js'
+import Setup from '../components/setup.js'
 import {functions} from '../imports/functions.js'
-import {OpenMessage, CreateMessage} from '../componenets/message.js'
+import {OpenMessage, CreateMessage} from '../components/message.js'
 
 const log = console.log
 

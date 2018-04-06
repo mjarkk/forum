@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {functions} from '../imports/functions.js'
-import MDinput from '../componenets/md-input.js'
+import MDinput from '../components/md-input.js'
 
 const log = console.log
 
