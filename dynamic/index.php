@@ -17,6 +17,8 @@
       <% } %>
     <% }) %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="shortcut icon" href="./icons/log.ico" type="image/x-icon">
     <script>
       <?php
         if ($userinf['status']) {
