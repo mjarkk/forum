@@ -31,6 +31,7 @@ class App extends Component {
       LoginStatus
     }
     this.urlHandeler = new urlhandeler({
+      watch: true,
       changeState: toChagne => this.setState(toChagne),
       installEv: data => {
         this.state.show = data

@@ -79,8 +79,14 @@ class BigMenu extends Component {
           : 
             <div className="proviel">
               <div className="needLogin">
-                <button onClick={() => this.state.LoginStatus.openlogin(false)}>Login</button>
-                <button onClick={() => this.state.LoginStatus.openlogin(true)}>Register</button>
+                <button onClick={() => {
+                  this.state.LoginStatus.openlogin(false)
+                  this.close()
+                }}>Login</button>
+                <button onClick={() => {
+                  this.state.LoginStatus.openlogin(true)
+                  this.close()
+                }}>Register</button>
               </div>
             </div>
           }

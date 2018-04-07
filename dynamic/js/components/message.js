@@ -6,6 +6,7 @@ import MDdelete from 'react-icons/lib/md/delete'
 import {functions} from '../imports/functions.js'
 import MDinput from '../components/md-input.js'
 import Popup from '../components/popup.js'
+import UserInfo from '../components/userinfo.js'
 
 const log = console.log
 let message
@@ -23,7 +24,19 @@ const escapeHtml = unsafe =>
 const ListItem = (props) => 
   <div className="messageItem">
     <div className="side">
-      <div className="proviel">{ props.username.slice(0,2) }</div>
+      <div className="proviel" onClick={() => props.userDetialsHandeler(true)}>
+        {(props.userDetials) ? 
+          <UserInfo 
+            onShouldClose={() => props.userDetialsHandeler(false)}
+            username={props.username}
+            style={{
+              top: '-25px',
+              left: '-14px'
+            }}
+          />
+        : ''}
+        { props.username.slice(0,2) }
+      </div>
     </div>
     <div className="acctualMessage">
       <div className="sideData">
@@ -220,6 +233,12 @@ class Message extends Component {
               msg={this.state.beginMsg.msg} 
               LoginStatus={this.state.LoginStatus}
               id={this.state.beginMsg.id}
+              userDetials={this.state.beginMsg.userDetials}
+              userDetialsHandeler={status => {
+                this.setState({
+                  beginMsg: Object.assign({}, this.state.beginMsg, {userDetials: status})
+                })
+              }}
             />
           : ''} 
 
@@ -233,6 +252,14 @@ class Message extends Component {
                 LoginStatus={this.state.LoginStatus}
                 id={el.id}
                 arrayID={id}
+                userDetials={el.userDetials}
+                userDetialsHandeler={status => {
+                  let toChange = this.state.reactions
+                  toChange[id]['userDetials'] = status
+                  this.setState({
+                    reactions: toChange
+                  })
+                }}
               />
             )
           : ''} 

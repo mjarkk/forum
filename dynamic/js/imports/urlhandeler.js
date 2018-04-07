@@ -5,6 +5,11 @@ const log = console.log
 
 class urlHandeler {
   constructor(inputs) {
+    // inputs = {
+    //   changeState: <function (a event that gives a new state to index.js)>,
+    //   installEv: <function (fires when class is loaded, this reports the page it needs to be on)>
+    //   watch: <boolean (watch the url change and handel the changes)>
+    // }
     this.changeState = inputs.changeState || (() => {})
     let fullPath = location.pathname.split('/')
     let file = fullPath[fullPath.length - 1]
@@ -21,12 +26,14 @@ class urlHandeler {
     this.basepath = fullPath.splice(0,fullPath.length - (file == '' || file.indexOf('.php') != -1 ? 1 : 0)).join('/')
     this.basepath = this.basepath + (this.basepath[this.basepath.length - 1] == '/' ? '' : '/')
 
-    window.addEventListener('popstate', (ev) => {
-      let href = location.href
-      if (!href.includes('#')) {
-        this.GoTo(href)
-      }
-    })
+    if (inputs.watch) {
+      window.addEventListener('popstate', (ev) => {
+        let href = location.href
+        if (!href.includes('#')) {
+          this.GoTo(href)
+        }
+      })
+    }
   }
   getFileName(path) {
     let fullPath = path.split('/')

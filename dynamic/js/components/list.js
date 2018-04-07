@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Setup from '../components/setup.js'
 import {functions} from '../imports/functions.js'
 import {OpenMessage, CreateMessage} from '../components/message.js'
+import urlhandeler from '../imports/urlhandeler.js'
 
 const log = console.log
 
@@ -17,6 +18,9 @@ class List extends Component {
       list: inputs.list
     }
     this.fetchList(inputs.list || 0)
+    this.urlHandeler = new urlhandeler({
+      watch: false
+    }) 
   }
   shouldComponentUpdate /* lol yes :D */ (inputs) {
     if (inputs.LoginStatus.logedin != this.state.LoginStatus.logedin) {
@@ -69,6 +73,7 @@ class List extends Component {
           <button
             onClick={() => {
               CreateMessage()
+              this.urlHandeler.changePath('/message.php')
             }}
           >Nieuw bericht</button>
         </div> : ''}
@@ -80,6 +85,7 @@ class List extends Component {
           {this.state.messages.reverse().map((msg, id) => 
             <div key={id} className="listitem" onClick={() => {
               OpenMessage(msg)
+              this.urlHandeler.changePath('/message.php?id=' + (msg.id || '-1'))
             }}>
               <div className="itemTitle">{msg.title}</div>
               <div className="subdata">
