@@ -17,8 +17,11 @@
       <% } %>
     <% }) %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="manifest" href="./manifest.json">
+    <?php
+      echo "<link rel=\"manifest\" href=\"" . removeFileExtension($_SERVER['DOCUMENT_URI']) . "/api/manifest.php\">";
+    ?>
     <link rel="shortcut icon" href="./icons/log.ico" type="image/x-icon">
+    <meta name="theme-color" content="#0086c3">
     <script>
       <?php
         if ($userinf['status']) {

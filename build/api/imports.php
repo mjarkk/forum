@@ -6,6 +6,7 @@ include_once dirname(__FILE__) . '/settings.php';
 include_once dirname(__FILE__) . '/functions/pbkdf2.php';
 include_once dirname(__FILE__) . '/functions/checkuser.php';
 include_once dirname(__FILE__) . '/functions/userdata.php';
+include_once dirname(__FILE__) . '/functions/delfilex.php';
 
 $pdo = null;
 
