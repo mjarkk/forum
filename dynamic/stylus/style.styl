@@ -117,6 +117,24 @@ button
           span
             font-size 18px
             font-weight bold
+  .lists
+    .listitem
+      display flex
+      justify-content space-between
+      align-items center
+      flex-wrap nowrap
+      padding 10px 0px
+      .itemTitle, .options
+        display inline-block
+      .itemTitle
+        font-size 25px
+        width 100%
+      .options
+        .remove
+          color #000
+          transition .2s color
+          &:hover
+            color #c30808
 
 .mainApp
   .listWrapper
@@ -525,3 +543,34 @@ button
       display inline-block
       width 100%
       padding-bottom 3px
+
+.newList
+  position fixed
+  top 0px
+  left 0px
+  height 100vh
+  width 100vw
+  background-color rgba(0%, 0%, 0%, 0.2)
+  display flex
+  justify-content center
+  align-items center
+  .newListInside
+    width 100%
+    max-width 318px
+    background-color Background
+    overflow hidden
+    border-radius 20px
+    box-shadow Shadow4
+    h2
+      display block
+      box-sizing border-box
+      padding 20px
+      background-color Secondary
+      color white
+      text-align center
+    .inputs, .buttons
+      display flex
+      justify-content center
+      align-content center
+      padding: 0px 20px 20px 20px
+
