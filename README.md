@@ -49,20 +49,26 @@ Follow the steps under here to run the steps
   - user icon
   - quote message in reaction
   - ~~markdown support~~ :heavy_check_mark:
-  - add things to markdown
   - scroll and load more data
 - menu
-  - make working links
+  - ~~make working links~~ :heavy_check_mark:
 - lists
   - ~~messages~~ :heavy_check_mark:
   - ~~go to message if clicked~~ :heavy_check_mark:
-  - sub lists
-  - go to sub list it clicked
-  - message user icon
-  - save fetches to indexedDB or local storage
+  - ~~sub lists~~ :heavy_check_mark:
+  - go to sub list when clicked
 - PWA
   - service worker
   - manifest
   - a wrapper around fetch that re-fetches automaticly when it fails or gets the data from the cache if it's available
   - a good score in lighthouse chrome dev tool -> Audits 
   - save fetches to indexedDB or local storage
+- Tests
+  - ~~Add test setup~~ :heavy_check_mark:
+  - More tests
+  - Test the build progress
+- Build
+  - Add suport for making a release package
+  - Run `yarn build`
+  - Check if the build was correct (maybe using docker and chrome headless also maybe inside of docker for easy access)
+  - Compress the package inside a zip file
