@@ -1,5 +1,6 @@
 # Forum
-Make a forum as school project build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).  
+Make a forum as school project.  
+build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).  
 
 ## Setup
 - Install [node.js](https://nodejs.org/en/)
