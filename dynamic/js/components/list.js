@@ -139,7 +139,9 @@ class List extends Component {
                       size={25}
                       onClick={() => {
                         functions.fetch('api/removelist.php', 'json', (data) => {
-                          log(data)
+                          if (data.status) {
+                            this.fetchList(this.state.lastListId)
+                          }
                         }, {
                           cache: 'no-cache',
                           method: 'POST',
@@ -190,11 +192,9 @@ class List extends Component {
               <div className="buttons">
                 <button
                   disabled={this.state.createListWorking}
-                  onClick={() => {
-                    this.setState({
+                  onClick={() => this.setState({
                       createList: false
-                    })
-                  }}
+                  })}
                 >Terug</button>
                 <button
                   disabled={!this.state.createListName || this.state.createListWorking}
@@ -204,12 +204,11 @@ class List extends Component {
                     }, () => {
                       functions.fetch('./api/list.php', 'json', (data) => {
                         if (data.status) {
-                          this.fetchList(this.state.list)
                           this.setState({
                             createList: false,
                             createListWorking: false,
                             createListName: ''
-                          })
+                          }, () => this.fetchList(this.state.lastListId))
                         } else {
                           this.setState({
                             createListWorking: false
@@ -234,6 +233,8 @@ class List extends Component {
           callback={(show) => {
             this.setState({
               showSetup: show
+            }, () => {
+              this.fetchList(this.state.lastListId)
             })
           }}
         />
