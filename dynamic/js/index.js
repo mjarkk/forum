@@ -42,7 +42,7 @@ class App extends Component {
     this.setState({
       show: 'list'
     })
-    this.urlHandeler.changePath('/')
+    this.urlHandeler.changePath('/?list=' + this.state.list)
   }
   render() {
     return (
@@ -61,6 +61,7 @@ class App extends Component {
             <div className="listWrapper">
               <List 
                 LoginStatus={this.state.LoginStatus}
+                lastList={list => this.setState({list})}
               />
             </div>
           : ''

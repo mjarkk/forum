@@ -34,6 +34,7 @@ class List extends Component {
       createListWorking: false
     }
     this.fetchList(this.state.lastListId)
+    this.lastList = newID => inputs.lastList(newID) || functions.fake()
   }
   componentWillReceiveProps(inputs) {
     if (inputs.LoginStatus) {
@@ -56,6 +57,7 @@ class List extends Component {
               forumName: jsonData.title,
               lastListId: listNumber
             })
+            this.lastList(listNumber)
           } else {
             let status = data.report
             if(status && !status.DB && !status.ENV && !status.SQL) {
