@@ -13,48 +13,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['todo'])) {
     if($_POST['todo'] == 'create') {
       // create a message
-      if (isset($_SESSION['ID']) && isset($_POST['reaction']) && isset($_POST['messageTitle']) && $_POST['reaction'] != '' && $_POST['messageTitle'] != '') {
+      if (isset($_SESSION['ID']) && isset($_POST['fromList']) && isset($_POST['reaction']) && isset($_POST['messageTitle']) && $_POST['reaction'] != '' && $_POST['messageTitle'] != '') {
         $date = date("Y/m/d") . '-' . date("h:i:sa");
-        SQLfetch("
-          INSERT INTO `messages` 
-          (`bindTo`, `message`, `created`, `userID`, `start`, `premission`, `inList`, `title`) 
-          VALUES 
-          (:bindTo, :message, :created, :userID, :start, :premission, :inList, :title);
+        $testList = SQLfetch("
+          SELECT *
+          FROM list
+          WHERE ID = :ID
         ", array(
-          ':bindTo' => -1,
-          ':message' => $_POST['reaction'],
-          ':created' => $date,
-          ':userID' => $_SESSION['ID'],
-          ':start' => 'true',
-          ':premission' => '1',
-          ':inList' => '0',
-          ':title' => $_POST['messageTitle']
+          ':ID' => $_POST['fromList']
         ));
-        $getPostID = SQLfetch("
-          SELECT MAX(ID) as highestValue
-          FROM messages
-          WHERE userID = :userID
-        ", array(
-          ':userID' => $_SESSION['ID']
-        ));
-        $postID = -1;
-        if ($getPostID['status'] && count($getPostID['data']) >= 1) {
-          $postID = $getPostID['data'][0]['highestValue'];
-
-          // change the bindTo from the post to the ID of itself
+        if (($testList['status'] && isset($testList['data'][0])) || (int)$_POST['fromList'] == 0) {
           SQLfetch("
-            UPDATE messages
-            SET bindTo = :bindTo
-            WHERE ID = :bindTo
-          ",array(
-            ':bindTo' => $postID
+            INSERT INTO `messages` 
+            (`bindTo`, `message`, `created`, `userID`, `start`, `premission`, `inList`, `title`) 
+            VALUES 
+            (:bindTo, :message, :created, :userID, :start, :premission, :inList, :title);
+          ", array(
+            ':bindTo' => -1,
+            ':message' => $_POST['reaction'],
+            ':created' => $date,
+            ':userID' => $_SESSION['ID'],
+            ':start' => 'true',
+            ':premission' => '1',
+            ':inList' => $_POST['fromList'],
+            ':title' => $_POST['messageTitle']
           ));
-        
+          $getPostID = SQLfetch("
+            SELECT MAX(ID) as highestValue
+            FROM messages
+            WHERE userID = :userID
+          ", array(
+            ':userID' => $_SESSION['ID']
+          ));
+          $postID = -1;
+          if ($getPostID['status'] && count($getPostID['data']) >= 1) {
+            $postID = $getPostID['data'][0]['highestValue'];
+
+            // change the bindTo from the post to the ID of itself
+            SQLfetch("
+              UPDATE messages
+              SET bindTo = :bindTo
+              WHERE ID = :bindTo
+            ",array(
+              ':bindTo' => $postID
+            ));
+          
+          }
+          echo json_encode(array(
+            'status' => True,
+            'id' => $postID
+          ));
+        } else {
+          returnFalse('post data in corect');
         }
-        echo json_encode(array(
-          'status' => True,
-          'id' => $postID
-        ));
       } else {
         returnFalse('post data in corect');
       }

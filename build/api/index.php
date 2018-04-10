@@ -1,2 +1,1 @@
-<?php
-include_once './imports.php';
+<!DOCTYPE html><html><head><title>Forum</title></head><body><script>location.pathname = location.pathname.replace('/api', '')</script></body></html>

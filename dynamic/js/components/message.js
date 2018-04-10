@@ -3,8 +3,9 @@ import snarkdown from 'snarkdown'
 import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 import MDdelete from 'react-icons/lib/md/delete'
-import {functions} from '../imports/functions.js'
 import MDinput from '../components/md-input.js'
+import {functions} from '../imports/functions.js'
+import urlHandeler from '../imports/urlhandeler.js'
 import Popup from '../components/popup.js'
 import UserInfo from '../components/userinfo.js'
 
@@ -75,6 +76,8 @@ const ListItem = (props) =>
                     message.setState({
                       reactions: toset
                     })
+                  } else {
+                    message.onShow(false)
                   }
                 }
               }, {
@@ -97,7 +100,10 @@ class Message extends Component {
   constructor(inputs) {
     super(inputs)
     let id = this.getMsgID()
+    let fromLS = JSON.parse(localStorage.getItem('lastList'))
     this.state = {
+      fromListID: (fromLS && (typeof fromLS.fromListID == 'number' || typeof fromLS.fromListID == 'string')) ? fromLS.fromListID : 0,
+      fromListName: (fromLS && (typeof fromLS.fromListName == 'number' || typeof fromLS.fromListName == 'string')) ? fromLS.fromListName :  'home',
       waitingServe: false,
       reaction: '',
       startTitle: '',
@@ -121,6 +127,9 @@ class Message extends Component {
       reactions: [],
       LoginStatus: inputs.LoginStatus
     }
+    this.urlhandeler = new urlHandeler({
+      watch: false
+    })
     if (this.state.opened && this.state.id != -1) {
       this.fetchMsg(this.state.id)
     }
@@ -268,6 +277,9 @@ class Message extends Component {
             <div className={(this.state.beginMsg.id == '-1' ? 'newMessage ' : '') + 'comment'}>
               <h3>{(this.state.beginMsg.id == '-1') ? 'Nieuw bericht' : 'Comment'}</h3>
               {(this.state.beginMsg.id == '-1') ? 
+                <p>Maak een bericht in lijst: <b>{this.state.fromListName}</b></p>
+              : ''}
+              {(this.state.beginMsg.id == '-1') ? 
                 <MDinput 
                   label="title" 
                   type="text" 
@@ -312,6 +324,8 @@ class Message extends Component {
                                 waitingServe: false,
                                 reaction: '',
                                 startTitle: ''
+                              }, () => {
+                                this.urlhandeler.changePath('/message.php?id=' + data.id)
                               })
                             })
                           } else {
@@ -327,7 +341,8 @@ class Message extends Component {
                             reaction: reactionToSend,
                             messageTitle: this.state.startTitle,
                             messageId: this.state.beginMsg.id,
-                            todo: this.state.beginMsg.id == '-1' ? 'create' : 'add'
+                            todo: this.state.beginMsg.id == '-1' ? 'create' : 'add',
+                            fromList: this.state.fromListID
                           }
                         })
                       })
@@ -362,8 +377,10 @@ class Message extends Component {
 }
 
 export default Message
-export const CreateMessage = () => {
+export const CreateMessage = (listID, listName) => {
   message.setState({
+    fromListID: listID,
+    fromListName: listName,
     opened: true,
     id: -1,
     title: '',
@@ -377,7 +394,12 @@ export const CreateMessage = () => {
       title : ''
     }
   })
-  message.onShow(message.state)
+  message.onShow(true)
+  localStorage.setItem('lastList', JSON.stringify({
+    fromListID: listID, 
+    fromListName: listName
+  }))
+  return true
 }
 export const OpenMessage = (input) => {
   message.setState({
@@ -393,5 +415,5 @@ export const OpenMessage = (input) => {
     }
   })
   message.fetchMsg(input.id)
-  message.onShow(message.state)
+  message.onShow(true)
 }

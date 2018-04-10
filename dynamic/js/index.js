@@ -38,6 +38,12 @@ class App extends Component {
       }
     }) 
   }
+  viewList() {
+    this.setState({
+      show: 'list'
+    })
+    this.urlHandeler.changePath('/')
+  }
   render() {
     return (
       <div className="mainApp">
@@ -47,20 +53,14 @@ class App extends Component {
               menuHandeler(true)
             }} size={35} />
           : 
-            <MDback onClick={e => {
-              this.setState({
-                show: 'list'
-              })
-              this.urlHandeler.changePath('/')
-            }} size={35} />
+            <MDback onClick={e => this.viewList()} size={35} />
           }
           <h1>{this.state.title}</h1>
         </div>
         { (this.state.show == 'list') ? 
             <div className="listWrapper">
               <List 
-                LoginStatus={this.state.LoginStatus} 
-                list={this.state.list}
+                LoginStatus={this.state.LoginStatus}
               />
             </div>
           : ''
@@ -86,10 +86,10 @@ class App extends Component {
         <Message 
           LoginStatus={this.state.LoginStatus} 
           show={this.state.show == 'message'} 
-          onShow={(data) => 
-            this.setState({
-              show: 'message'
-            })
+          onShow={data => 
+            (typeof data == 'object' || typeof data == 'undefined' || (typeof data == 'boolean' && data))
+              ? this.setState({show: 'message'})
+              : this.viewList()
           }
         />
         {(this.state.show == 'settings') ? 

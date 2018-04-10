@@ -1,3 +1,5 @@
+import 'whatwg-fetch'
+
 const log = console.log
 
 export const functions = {
@@ -66,13 +68,11 @@ export const functions = {
     }
 
     fetch(url, meta)
-      .then(res => {
-        if (type == 'text') {
-          return res.text()
-        } else {
-          return res.json()
-        }
-      })
+      .then(res => 
+        (type == 'text') 
+          ? res.text()
+          : res.json()
+      )
       .then(data => {
         if (typeof data.status == 'boolean') {
           callback(data)

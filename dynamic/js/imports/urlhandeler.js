@@ -74,6 +74,11 @@ class urlHandeler {
       })
     }
   }
+  OpenInNewTab(to) {
+    to = location.origin + this.basepath.slice(0,-1) + (to[0] == '/' ? to : `/${to}`)
+    let win = window.open(to, '_blank')
+    win.focus()
+  }
   changePath(newpath) {
     newpath = this.basepath.slice(0,-1) + (newpath[0] == '/' ? newpath : `/${newpath}`)
     location.hash = newpath.replace(/\//g,'')
