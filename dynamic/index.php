@@ -18,7 +18,7 @@
     <% }) %>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <?php
-      echo "<link rel=\"manifest\" href=\"" . removeFileExtension($_SERVER['DOCUMENT_URI']) . "/api/manifest.php\">";
+      echo "<link rel=\"manifest\" href=\"" . removeFileExtension($_SERVER['REQUEST_URI']) . "/api/manifest.php\">";
     ?>
     <link rel="shortcut icon" href="./icons/log.ico" type="image/x-icon">
     <meta name="theme-color" content="#0086c3">

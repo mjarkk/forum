@@ -38,7 +38,7 @@ function CreateTables() {
         'premission' => 'text' // is the user an normal user, admin, etc (number from 1 to 3 where 3 is a admin and 1 is a normal user)
       )
     );
-    if ($GLOBALS['report']['SQL'] || !$report['ENV']) {
+    if ($GLOBALS['report']['SQL'] || !$GLOBALS['report']['ENV']) {
       try {
         foreach ($toCreate as $key => $value) {
           $SQLSTRING = '';
@@ -176,10 +176,10 @@ function envFileSetup () {
     $data = "
       <?php
       \$env = array(
-        'SQLusername' => '" . str_replace("'". "\\'" . $_POST['username']) . "',
-        'SQLpassword' => '" . str_replace("'". "\\'" . $_POST['password']) . "',
-        'SQLserver' => '" . str_replace("'". "\\'" . $_POST['server']) . "',
-        'SQLdatabaseName' => '" . str_replace("'". "\\'" . $_POST['databasename']) . "'
+        'SQLusername' => '" . str_replace("'", "\\'", $_POST['username']) . "',
+        'SQLpassword' => '" . str_replace("'", "\\'", $_POST['password']) . "',
+        'SQLserver' => '" . str_replace("'", "\\'", $_POST['server']) . "',
+        'SQLdatabaseName' => '" . str_replace("'", "\\'", $_POST['databasename']) . "'
       );
     ";
     fwrite($fileHandeler, $data);
@@ -189,7 +189,7 @@ function envFileSetup () {
 }
 
 if (
-  !$report['ENV'] // check if there is no env data if there is make sure no-one can break in
+  !$GLOBALS['report']['ENV'] // check if there is no env data if there is make sure no-one can break in
   && $_SERVER['REQUEST_METHOD'] === 'POST' 
   && isset($_POST['username']) 
   && isset($_POST['password']) 
@@ -207,7 +207,7 @@ if (
     $FileTest = envFileSetup();
     echo json_encode($FileTest);
   }
-} elseif ($report['ENV']) {
+} elseif ($GLOBALS['report']['ENV']) {
   echo json_encode(array('status' => False, 'why' => 'can\'t run setup because it\'s already ran'));
 } else {
   echo json_encode(array('status' => False, 'why' => 'post data is wrong'));

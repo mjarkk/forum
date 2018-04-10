@@ -1,8 +1,9 @@
-<?php
 
-$env = array(
-  'SQLusername' => '',
-  'SQLpassword' => '',
-  'SQLserver' => 'localhost',
-  'SQLdatabaseName' => 'forum'
-);
+      <?php
+      $env = array(
+        'SQLusername' => 'root',
+        'SQLpassword' => '',
+        'SQLserver' => 'localhost',
+        'SQLdatabaseName' => 'forum'
+      );
+    

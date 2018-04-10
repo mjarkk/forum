@@ -2,7 +2,7 @@
 
 include_once './imports.php';
 
-$fullUrl = explode('/', removeFileExtension($_SERVER['DOCUMENT_URI']));
+$fullUrl = explode('/', removeFileExtension($_SERVER['REQUEST_URI']));
 array_pop($fullUrl);
 $fullUrl = implode('/', $fullUrl);
 

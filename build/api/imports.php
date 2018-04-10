@@ -85,7 +85,7 @@ function SQLfetch ($query, $exData = array()) {
   if ($GLOBALS['report']['SQL'] == True) {
     return DBrun($GLOBALS['pdo'], $exData, $query);
   } elseif (
-    !$report['ENV']
+    !$GLOBALS['report']['ENV']
     && $_SERVER['REQUEST_METHOD'] === 'POST' 
     && isset($_POST['username'])
     && isset($_POST['password'])
