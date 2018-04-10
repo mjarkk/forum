@@ -64,3 +64,4 @@ build/**/*.html
 build/index.php
 build/message.php
 build/settings.php
+./**/test.php
