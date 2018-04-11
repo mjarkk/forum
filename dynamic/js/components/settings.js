@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {functions} from '../imports/functions.js'
 import MDinput from '../components/md-input.js'
+import UserInfo from '../components/userinfo.js'
 
 const log = console.log
 
@@ -114,11 +115,38 @@ class Settings extends Component {
                     <div className="username item">Username</div>
                     <div className="premission item">Premission</div>
                   </div>
-                  {this.state.users.map(el => 
-                    <div key={el.ID} className="user">
+                  {this.state.users.map((el, id) => 
+                    <div 
+                      key={id} 
+                      className="user"
+                      onClick={() => {
+                        let toChange = this.state.users
+                        toChange[id]['userInfoOpen'] = true
+                        this.setState({
+                          users: toChange
+                        })
+                      }}
+                    >
                       <div className="id item">{el.ID}</div>
                       <div className="username item">{el.username}</div>
                       <div className="premission item">{el.premission}</div>
+                      { (el.userInfoOpen) ? 
+                        <UserInfo 
+                          onShouldClose={() => {
+                            let toChange = this.state.users
+                            toChange[id]['userInfoOpen'] = false
+                            this.setState({
+                              users: toChange
+                            })
+                          }}
+                          LoginStatus={this.state.LoginStatus}
+                          username={el.username}
+                          style={{
+                            top: '-25px',
+                            left: '-14px'
+                          }}
+                        />
+                      : '' }
                     </div>
                   )}
                 </div>

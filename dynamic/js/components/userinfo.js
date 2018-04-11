@@ -8,9 +8,11 @@ class UserInfo extends Component {
   constructor(inputs) {
     super(inputs)
     this.state = {
+      LoginStatus: inputs.LoginStatus || {logedin: false},
       username: inputs.username || '',
       id: inputs.id || undefined,
       userPost: [],
+      userComments: [],
       error: false,
       comments: '',
       karma: '',
@@ -44,7 +46,8 @@ class UserInfo extends Component {
           this.setState({
             username: newData.username,
             premission: newData.premission,
-            comments: newData.comments
+            comments: newData.comments,
+            userComments: newData.userposts
           })
         } else {
           this.setState({
@@ -93,6 +96,16 @@ class UserInfo extends Component {
             {(this.state.premission) ? <p>Rol: <b>{ this.returnRole(this.state.premission) }</b></p> : ''}
             {(this.state.comments) ? <p>Comments: <b>{ this.state.comments }</b></p> : ''}
             {(this.state.karma) ? <p>Karma: <b>{ this.state.karma }</b></p> : ''}
+            {this.state.userComments.length > 0 ? <h4>Berichten</h4> : ''}
+            {this.state.userComments.map((el, id) => 
+              <div key={id} className={(el.start == 'true' ? 'startp ' : 'notstartp ') + 'userPost'}>
+                { ((el.start == 'true') 
+                    ? el.title
+                    : el.message)
+                  .substring(0, 18)
+                }
+              </div>
+            )}
           </div>
         }
       </div>

@@ -36,7 +36,7 @@ const ListItem = (props) =>
             }}
           />
         : ''}
-        { props.username.slice(0,2) }
+        <span>{ props.username.slice(0,2) }</span>
       </div>
     </div>
     <div className="acctualMessage">

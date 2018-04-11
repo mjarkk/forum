@@ -31,8 +31,21 @@ function aboutUser($userID = -1, $username = '', $extra = false) {
         'id' => $_data['ID'],
         'username' => $_data['username'],
         'premission' => $_data['premission'],
-        'comments' => $_data['commentsCount']
+        'comments' => $_data['commentsCount'],
       );
+      if ($extra) {
+        $returnData['userposts'] = array();
+        $userPosts = SQLfetch("
+          SELECT ID, start, title, message 
+          FROM messages
+          WHERE userID = :userID
+        ", array(
+          ':userID' => $_data['ID']
+        ));
+        if ($userPosts['status'] && isset($userPosts['data'][0])) {
+          $returnData['userposts'] = $userPosts['data'];
+        }
+      }
       return array('status' => True, 'data' => $returnData);
     } else {
       return array('status' => False);

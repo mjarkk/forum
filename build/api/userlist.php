@@ -12,7 +12,7 @@ if (
   && isset($_POST['id'])
   && isset($_POST['username'])
 ) {
-  echo json_encode(aboutUser($_POST['id'], $_POST['username']));
+  echo json_encode(aboutUser($_POST['id'], $_POST['username'], True));
 } else {
   if($users['status'] && $users['data']) {
 
