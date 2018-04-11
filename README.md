@@ -42,34 +42,30 @@ Follow the steps under here to run the steps
   - ~~login style~~ :heavy_check_mark:
   - ~~register style~~ :heavy_check_mark:
   - ~~register process~~ :heavy_check_mark:
-  - user settings
+  - ~~user settings~~ :heavy_check_mark:
   - set user proviel picture
 - message
   - ~~message itself~~ :heavy_check_mark:
   - ~~add reactions to messages~~ :heavy_check_mark:
   - user icon
-  - quote message in reaction
   - ~~markdown support~~ :heavy_check_mark:
-  - scroll and load more data
 - menu
   - ~~make working links~~ :heavy_check_mark:
 - lists
   - ~~messages~~ :heavy_check_mark:
   - ~~go to message if clicked~~ :heavy_check_mark:
   - ~~sub lists~~ :heavy_check_mark:
-  - go to sub list when clicked
+  - ~~go to sub list when clicked~~ :heavy_check_mark:
 - PWA
   - service worker
   - manifest
   - a wrapper around fetch that re-fetches automaticly when it fails or gets the data from the cache if it's available
   - a good score in lighthouse chrome dev tool -> Audits 
   - save fetches to indexedDB or local storage
-- Tests
+- Build & Tests
   - ~~Add test setup~~ :heavy_check_mark:
-  - More tests
-  - Test the build progress
-- Build
   - Add suport for making a release package
   - Run `yarn build`
   - Check if the build was correct (maybe using docker and chrome headless also maybe inside of docker for easy access)
+  - A lot of tests in the testing part
   - Compress the package inside a zip file
