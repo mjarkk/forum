@@ -25,16 +25,8 @@ location ~ (\.env) {
 - Make a softlink from `build` to you'r webserver or just copy the folder after the build has completed
 
 ## Tests
-NOTE: I'm still learning to write good tests that are effective and don't need a lot / noting of preparation  
-For now you still need to do some preparation and I haven't written a lot of them  
-Follow the steps under here to run the steps  
-- [x] Install [ava](https://github.com/avajs/ava#usage) as a global npm package
-- [x] `yarn dev` and don't stop it until the tests are dun
-- [x] The DB data from the setup is not removed (Welkom post, created users, ...)
-- [x] Make sure you have `build/api/.env` with the credentials of the SQLdatabase
-- `yarn test`
-- Follow the hint that output of `yarn test` shows if it doesn't show the hint the `.env` file is wrong
-- Go back to the terminal where the test was running and wait until it's dune
+Currently I have no goal with the test file  
+It will probebly be used in the build progress to test the build
 
 ## To Do
 - user
