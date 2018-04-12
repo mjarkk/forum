@@ -167,7 +167,7 @@ class Message extends Component {
           ev.preventDefault()
           let newPopup = this.state.popup
           newPopup.url = (ev.target && ev.target.href) ? ev.target.href : 'http://'
-          Array(...ev.path).reverse().map(el => {
+          Array(...(ev.path || (ev.composedPath && ev.composedPath()))).reverse().map(el => {
             if (el.href) {
               newPopup.url = el.href
             }

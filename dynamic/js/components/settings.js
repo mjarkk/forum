@@ -142,8 +142,8 @@ class Settings extends Component {
                           LoginStatus={this.state.LoginStatus}
                           username={el.username}
                           style={{
-                            top: '-25px',
-                            left: '-14px'
+                            top: '-11px',
+                            left: '-214px'
                           }}
                         />
                       : '' }

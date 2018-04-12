@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import MDrefresh from 'react-icons/lib/md/refresh'
+import MDdelete from 'react-icons/lib/md/delete'
+import MDinput from '../components/md-input.js'
 import {functions} from '../imports/functions.js'
 
 const log = console.log
@@ -17,20 +19,19 @@ class UserInfo extends Component {
       comments: '',
       karma: '',
       premission: '',
+      premissionError: false,
       style: inputs.style || {}
     }
 
     // check if clicked outside element if so close the popup
     document.body.onclick = ev => 
-      ![...ev.path]
+      ![...(ev.path || (ev.composedPath && ev.composedPath()))]
         .map(e => 
           e.classList && e.classList.value
             ? e.classList.value 
             : '')
         .reduce((acc, el) => 
           acc || el.indexOf('userInfo_js') != -1
-            ? true 
-            : false
           , false)
         ? this.close()
         : functions.fake()
@@ -92,6 +93,51 @@ class UserInfo extends Component {
           </div>
         : 
           <div className="infoHolder" style={this.state.style}>
+            {(this.state.LoginStatus.logedin && Number(this.state.LoginStatus.userData.premission) == 3 ) ?
+              <div className="actions">
+                <h3>Acties</h3>
+                <div className="toChange">
+                <p>Gebruiker premissions <b>1 of 3</b></p>
+                  <input 
+                    className={
+                      (Number(this.state.premission) == 3 || Number(this.state.premission) == 2 || Number(this.state.premission) == 1) 
+                        ? 'pass' 
+                        : 'wrong'
+                    } 
+                    type="number" 
+                    value={Number(this.state.premission)}
+                    onChange={ ev => {
+                      let newVal = Number(ev.target.value)
+                      let pass = (newVal && (newVal == 1 || newVal == 2 || newVal == 3))
+                      this.setState({
+                        premissionError: !pass,
+                        premission: (pass) ? newVal : this.state.premission
+                      })
+                      if (pass) {
+                        functions.fetch('api/changeuser.php', 'json', (data) => {
+                          log(data)
+                        }, {
+                          cache: 'no-cache',
+                          method: 'POST',
+                          body: {
+                            what: 'premissions',
+                            username: this.state.username
+                          }
+                        })
+                      }
+                    }} 
+                  />
+                </div>
+                <div className="toChange">
+                  <p>Verwijder gebruiker</p>
+                  <button
+                    onClick={() => {
+                      log('clicked on remove user')
+                    }}
+                  ><MDdelete/></button>
+                </div>
+              </div>
+            : ''}
             {(this.state.username) ? <h2>{this.state.username}</h2> : ''}
             {(this.state.premission) ? <p>Rol: <b>{ this.returnRole(this.state.premission) }</b></p> : ''}
             {(this.state.comments) ? <p>Comments: <b>{ this.state.comments }</b></p> : ''}
