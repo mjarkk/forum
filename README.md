@@ -53,8 +53,8 @@ It will probebly be used in the build progress to test the build
   - save fetches to indexedDB or local storage
 - Build & Tests
   - ~~Add test setup~~ :heavy_check_mark:
-  - ~~Add suport for making a release package~~
-  - ~~Run `yarn build`~~
+  - ~~Add suport for making a release package~~ :heavy_check_mark:
+  - ~~Run `yarn build`~~ :heavy_check_mark:
   - Check if the build was correct (maybe using docker and chrome headless also maybe inside of docker for easy access)
   - A lot of tests in the testing part
-  - ~~Compress the package inside a zip file~~
+  - ~~Compress the package inside a zip file~~ :heavy_check_mark:
