@@ -2,19 +2,16 @@
 Make a forum as school project.  
 build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).  
 
-## Setup
+## Webserver Setup
+- go to: [/releases](https://github.com/mjarkk/forum/releases)
+- Download the latest version and copy the fils to the webserver
+
+## Setup Dev
 - Install [node.js](https://nodejs.org/en/)
 - `npm i -g webpack webpack-cli yarn` (on linux and macOS you might need to add `sudo`)
 - `yarn`
-- Add a SQL database 
-- now follow `Setup Build` or `Setup Dev` depending on your situation
-
-## Setup Build
-- `yarn build`
-- Copy the `build` folder to your webserver  
-
-## Setup Dev
 - `yarn dev` (this will start a live reload server and watches the files)
+- Add a SQL database 
 - Add to the nginx virtual server config:  
 ```BASH
 location ~ (\.env) { 
@@ -56,8 +53,8 @@ It will probebly be used in the build progress to test the build
   - save fetches to indexedDB or local storage
 - Build & Tests
   - ~~Add test setup~~ :heavy_check_mark:
-  - Add suport for making a release package
-  - Run `yarn build`
+  - ~~Add suport for making a release package~~
+  - ~~Run `yarn build`~~
   - Check if the build was correct (maybe using docker and chrome headless also maybe inside of docker for easy access)
   - A lot of tests in the testing part
-  - Compress the package inside a zip file
+  - ~~Compress the package inside a zip file~~
