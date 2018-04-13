@@ -132,7 +132,10 @@ class Settings extends Component {
                       <div className="premission item">{el.premission}</div>
                       { (el.userInfoOpen) ? 
                         <UserInfo 
-                          onShouldClose={() => {
+                          onShouldClose={status => {
+                            if (typeof status == 'boolean' && status) {
+                              this.getUsers()
+                            }
                             let toChange = this.state.users
                             toChange[id]['userInfoOpen'] = false
                             this.setState({

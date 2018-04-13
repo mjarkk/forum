@@ -36,7 +36,7 @@ class UserInfo extends Component {
         ? this.close()
         : functions.fake()
     
-    this.close = () => inputs.onShouldClose() || functions.fake()
+    this.close = extra => inputs.onShouldClose(extra) || functions.fake()
     this.fetchInfo()
   }
   fetchInfo() {
@@ -97,31 +97,39 @@ class UserInfo extends Component {
               <div className="actions">
                 <h3>Acties</h3>
                 <div className="toChange">
-                <p>Gebruiker premissions <b>1 of 3</b></p>
+                <p>Verander premissie <b>1 of 3</b></p>
                   <input 
                     className={
                       (Number(this.state.premission) == 3 || Number(this.state.premission) == 2 || Number(this.state.premission) == 1) 
                         ? 'pass' 
                         : 'wrong'
                     } 
+                    onClick={ev => {
+                      let el = ev.target || ev.srcElement
+                      el.select()
+                    }}
                     type="number" 
                     value={Number(this.state.premission)}
                     onChange={ ev => {
+                      let el = ev.target || ev.srcElement
                       let newVal = Number(ev.target.value)
                       let pass = (newVal && (newVal == 1 || newVal == 2 || newVal == 3))
                       this.setState({
                         premissionError: !pass,
                         premission: (pass) ? newVal : this.state.premission
-                      })
+                      }, () => 
+                        el.select()
+                      )
                       if (pass) {
-                        functions.fetch('api/changeuser.php', 'json', (data) => {
+                        functions.fetch('api/changeuser.php', 'json', data => {
                           log(data)
                         }, {
                           cache: 'no-cache',
                           method: 'POST',
                           body: {
                             what: 'premissions',
-                            username: this.state.username
+                            username: this.state.username,
+                            premission: newVal
                           }
                         })
                       }
@@ -132,7 +140,18 @@ class UserInfo extends Component {
                   <p>Verwijder gebruiker</p>
                   <button
                     onClick={() => {
-                      log('clicked on remove user')
+                      functions.fetch('api/changeuser.php', 'json', (data) => {
+                        if (data.status) {
+                          this.close(true)
+                        }
+                      }, {
+                        cache: 'no-cache',
+                        method: 'POST',
+                        body: {
+                          what: 'remove',
+                          username: this.state.username
+                        }
+                      })
                     }}
                   ><MDdelete/></button>
                 </div>

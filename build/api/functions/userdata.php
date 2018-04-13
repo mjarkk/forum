@@ -5,25 +5,28 @@ function aboutUser($userID = -1, $username = '', $extra = false) {
     $userID = $_SESSION['ID'];
   }
   if (isset($userID) && ($userID != -1 || $username != '')) {
-    if ($username == '') {
-      $data = SQLfetch("
-        SELECT users.*, count(messages.userID) AS commentsCount
-        FROM (users
-        INNER JOIN messages ON users.ID = messages.userID)
-        WHERE users.ID = :id 
-      ", array(
-        ':id' => $userID
-      ));
-    } else {
-      $data = SQLfetch("
-        SELECT users.*, count(messages.userID) AS commentsCount
-        FROM (users
-        INNER JOIN messages ON users.ID = messages.userID)
-        WHERE users.username = :username 
-      ", array(
+    
+    if ($username) {
+      $test = SQLfetch('
+        SELECT *
+        FROM users
+        WHERE username = :username
+      ', array(
         ':username' => $username
       ));
+      if ($test['status'] && isset($test['data'][0])) {
+        $userID = $test['data'][0]['ID'];
+      }
     }
+
+    $data = SQLfetch("
+      SELECT users.*, count(messages.userID) AS commentsCount
+      FROM (users
+      INNER JOIN messages ON users.ID = messages.userID)
+      WHERE users.ID = :id 
+    ", array(
+      ':id' => $userID
+    ));
     
     if ($data['status'] && isset($data['data']) && isset($data['data'][0])) {
       $_data = $data['data'][0];
