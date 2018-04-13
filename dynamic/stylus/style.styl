@@ -262,6 +262,7 @@ button
     width 100%
     display flex
     flex-direction row
+    flex-wrap nowrap
     padding-bottom 20px
     box-sizing border-box
     .side
@@ -290,11 +291,12 @@ button
           position relative
           top -1px
     .acctualMessage
-      width 100%
       background-color Background
       border-radius 4px
       box-shadow Shadow2
       padding 10px
+      max-width 100%
+      width 100%
       .sideData
         span
           font-weight bold

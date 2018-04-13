@@ -133,25 +133,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           ':userID' => $_SESSION['ID'],
           ':ID' => $_POST['messageId']
         ));
+        if ($test['status'] && !isset($test['data'][0])) {
+          $userData = aboutUser($_SESSION['ID']);
+          if ($userData['status'] && (int)$userData['data']['premission'] == 3 || (int)$userData['data']['premission'] == 2) {
+            $test = SQLfetch("
+              SELECT *
+              FROM messages
+              WHERE ID = :ID
+            ", array(
+              ':ID' => $_POST['messageId']
+            ));
+          }
+        }
         if ($test['status'] && count($test['data']) >= 1) {
           $checkStart = $test['data'][0]['start'];
           // if it is the starting post
           if ($checkStart == 'true') {
             SQLfetch("
               DELETE FROM messages
-              WHERE userID = :userID 
-              AND bindTo = :bindTo
+              WHERE bindTo = :bindTo
             ", array(
-              ':userID' => $_SESSION['ID'],
               ':bindTo' => $_POST['messageId']
             ));
           } else {
             SQLfetch("
               DELETE FROM messages
-              WHERE userID = :userID 
-              AND ID = :ID
+              WHERE ID = :ID
             ", array(
-              ':userID' => $_SESSION['ID'],
               ':ID' => $_POST['messageId']
             ));
           }

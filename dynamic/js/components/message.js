@@ -44,14 +44,14 @@ const ListItem = (props) =>
         Created on: <span>{ props.created }</span>, by <span>{ props.username }</span>
       </div>
       <div className="msgTitle">{ props.title }</div>
-      <div className="msg" dangerouslySetInnerHTML={{__html: snarkdown(escapeHtml(props.msg))}}></div>
+      <div className="msg" style={{wordBreak: (Math.max(...(props.msg.replace('/n',' ').split(' ').map(s => s.length))) < 50) ? 'normal' : 'break-all'}} dangerouslySetInnerHTML={{__html: snarkdown(escapeHtml(props.msg))}}></div>
       <div className="btns">
         {/* <button><MDcomment size={25} /></button> */}
         { navigator.share ? 
           <button
             onClick={() => {
               let title = message.state.beginMsg.title
-              let url = location.href // TODO: add better link not a copy of the url bar for a more safe share
+              let url = location.href
               let text = document.createElement('div')
               text.innerHTML = snarkdown(escapeHtml(props.msg))
               text = text.innerText
@@ -65,7 +65,7 @@ const ListItem = (props) =>
             }}
           ><MDshare size={25} /></button>
         : ''}
-        {(props.LoginStatus.logedin && props.LoginStatus.userData.username == props.username && typeof props.id != 'undefined') ? 
+        {(props.LoginStatus.logedin && (props.LoginStatus.userData.username == props.username || Number(props.LoginStatus.userData.premission) == 3) && typeof props.id != 'undefined') ? 
           <button
             onClick={() => {
               functions.fetch('./api/message.php', 'json', data => {
@@ -131,7 +131,7 @@ class Message extends Component {
       watch: false
     })
     if (this.state.opened && this.state.id != -1) {
-      this.fetchMsg(this.state.id)
+      this.fetchMsg(this.state.id, () => this.CheckUpdate())
     }
     message = this
     this.onShow = inputs.onShow || (() => {})
@@ -206,6 +206,28 @@ class Message extends Component {
       LoginStatus: inputs.LoginStatus
     }
     this.setState(toSet)
+  }
+  CheckUpdate() {
+    if (this.state.opened && (this.state.id == -1 || this.state.id == '-1' || this.state.beginMsg.username)) {
+      setTimeout(() => 
+        functions.fetch('./api/message.php?id=' + this.state.beginMsg.id, 'json', data => {
+          if (data.status && data.data.length != this.state.reactions.length) {
+            this.setState({
+              reactions: data.data
+            }, () => 
+              this.CheckUpdate()
+            )
+          } else {
+            this.CheckUpdate()
+          }
+        }, {
+          cache: 'no-cache'
+        })
+      , 3000)
+    } else {
+      // if it's not open check after 7 seconds again
+      setTimeout(this.CheckUpdate, 7000)
+    }
   }
   fetchMsg(id, callback) {
     const doCallback = 
