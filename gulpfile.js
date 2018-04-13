@@ -124,7 +124,7 @@ taker.task(cleanUp, cb => {
 let dune = 'dune'
 taker.task(dune, cb => {
   log('\n')
-  log('Sucsessfull created ' + 'release.zip'.bold.green + ' file ')
+  log('Successfull created ' + 'release.zip'.bold.green + ' file ')
   log('\n')
   cb()
 })
