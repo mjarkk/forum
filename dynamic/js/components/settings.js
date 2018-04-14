@@ -64,7 +64,9 @@ class Settings extends Component {
                     backgroundImage: `url(${this.state.userIcon})`, 
                     border: '8px solid ' + ((this.state.userIconStats == 'normal') 
                       ? '#ccc'
-                      : '#f7c203')
+                      : (this.state.userIconState == 'working') 
+                        ? '#f7c203'
+                        : '#f75203')
                   }}
                   onClick={() => 
                     document.querySelector('.userProvielPicutureActions input').click()
@@ -77,7 +79,9 @@ class Settings extends Component {
                     let input = document.querySelector('.userProvielPicutureActions input')
                     if (input.files && input.files[0]) {
                       functions.fetch('api/usericon.php', 'json', data => {
-                        log(data)
+                        this.setState({
+                          userIconStats: data.status ? 'normal' : 'error'
+                        })
                       }, {
                         cache: 'no-cache',
                         method: 'POST',
