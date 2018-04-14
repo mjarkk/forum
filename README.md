@@ -32,11 +32,11 @@ It will probebly be used in the build progress to test the build
   - ~~register style~~ :heavy_check_mark:
   - ~~register process~~ :heavy_check_mark:
   - ~~user settings~~ :heavy_check_mark:
-  - set user proviel picture
+  - ~~set user proviel picture~~ :heavy_check_mark:
 - message
   - ~~message itself~~ :heavy_check_mark:
   - ~~add reactions to messages~~ :heavy_check_mark:
-  - user icon
+  - ~~user icon~~ :heavy_check_mark:
   - ~~markdown support~~ :heavy_check_mark:
 - menu
   - ~~make working links~~ :heavy_check_mark:
