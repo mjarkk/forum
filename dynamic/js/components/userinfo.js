@@ -157,10 +157,20 @@ class UserInfo extends Component {
                 </div>
               </div>
             : ''}
-            {(this.state.username) ? <h2>{this.state.username}</h2> : ''}
-            {(this.state.premission) ? <p>Rol: <b>{ this.returnRole(this.state.premission) }</b></p> : ''}
-            {(this.state.comments) ? <p>Comments: <b>{ this.state.comments }</b></p> : ''}
-            {(this.state.karma) ? <p>Karma: <b>{ this.state.karma }</b></p> : ''}
+            {this.state.username ? <h2>{this.state.username}</h2> : ''}
+            {this.state.username ? <div className="provielPicture">
+              <div 
+                className="actualImage"
+                style={{
+                  backgroundImage: `url(api/usericon.php?username=${this.state.username})`
+                }}
+              >
+              
+              </div>
+            </div> : ''}
+            {this.state.premission ? <p>Rol: <b>{ this.returnRole(this.state.premission) }</b></p> : ''}
+            {this.state.comments ? <p>Comments: <b>{ this.state.comments }</b></p> : ''}
+            {this.state.karma ? <p>Karma: <b>{ this.state.karma }</b></p> : ''}
             {this.state.userComments.length > 0 ? <h4>Berichten</h4> : ''}
             {this.state.userComments.map((el, id) => 
               <div key={id} className={(el.start == 'true' ? 'startp ' : 'notstartp ') + 'userPost'}>

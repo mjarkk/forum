@@ -76,20 +76,20 @@ class Settings extends Component {
                   <input onChange={() => {
                     let input = document.querySelector('.userProvielPicutureActions input')
                     if (input.files && input.files[0]) {
+                      functions.fetch('api/usericon.php', 'json', data => {
+                        log(data)
+                      }, {
+                        cache: 'no-cache',
+                        method: 'POST',
+                        body: {
+                          file: input.files[0]
+                        }
+                      })
                       let reader = new FileReader()
                       reader.onload = e => 
                       this.setState({
                         userIcon: e.target.result,
                         userIconStats: 'working'
-                      })
-                      functions.fetch('/url/.json', 'json', (data) => {
-                      
-                      }, {
-                        cache: 'no-cache',
-                        method: 'POST',
-                        body: {
-                        
-                        }
                       })
                       reader.readAsDataURL(input.files[0])
                     }

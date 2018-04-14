@@ -25,7 +25,13 @@ const escapeHtml = unsafe =>
 const ListItem = (props) => 
   <div className="messageItem">
     <div className="side">
-      <div className="proviel" onClick={() => props.userDetialsHandeler(true)}>
+      <div 
+        className="proviel" 
+        onClick={() => props.userDetialsHandeler(true)}
+        style={{
+          backgroundImage: `url(api/usericon.php?username=${props.username})`
+        }}
+      >
         {(props.userDetials) ? 
           <UserInfo 
             onShouldClose={() => props.userDetialsHandeler(false)}

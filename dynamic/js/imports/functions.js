@@ -63,7 +63,7 @@ let doc = {
         if (meta.body.hasOwnProperty(i)) {
           fakeFormData.append(i, meta.body[i])
         }
-      }
+      } 
       meta.body = fakeFormData
     }
 

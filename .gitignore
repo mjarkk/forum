@@ -64,6 +64,7 @@ build/**/*.html
 build/index.php
 build/message.php
 build/settings.php
+build/icons/users/*
 release/*
 release.zip
 ./**/test.php
