@@ -1,0 +1,28 @@
+version: '2'
+services:
+    nginx:
+        image: tutum/nginx
+        restart: always
+        ports:
+            - 8181:80
+        links:
+            - phpfpm
+            - db
+        volumes:
+            - ./docker/default:/etc/nginx/sites-available/default
+            - ./docker/default:/etc/nginx/sites-enabled/default
+            - ./release:/var/html
+    phpfpm:
+        image: chialab/php:7.2-fpm
+        restart: always
+        links:
+            - db
+        volumes:
+            - ./release:/var/html
+    db:
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+        volumes:
+            - ./docker/db:/var/lib/mysql

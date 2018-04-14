@@ -13,6 +13,11 @@ let start = name => {
   process.stdout.write(' ⌛' + colors.yellow(name) + '\r')
 }
 
+let skip = (name, cb) => {
+  process.stdout.write(' ✓ ' + colors.blue('skipping: ' + name) + ' \r \n')
+  cb()
+}
+
 let report = (name, err, cb) => {
   if (err) {
     log(colors.red('\ngot error with: ') + colors.red.bold(name))
@@ -85,6 +90,24 @@ taker.task(createEnv, cb => {
   )
 })
 
+let dockerStatus = false
+let CheckDockerSupport = 'check if docker is installed'
+taker.task(CheckDockerSupport, async cb => {
+  try {
+    start(CheckDockerSupport)
+    let output1 = { stdout, stderr } = await exec('docker -v')
+    let output2 = { stdout, stderr } = await exec('docker-compose -v')
+    if (output1.stdout.indexOf('version') != -1 && output2.stdout.indexOf('version') != -1) {
+      dockerStatus = true
+      report(CheckDockerSupport, false, cb)
+    } else {
+      skip(CheckDockerSupport, cb)
+    }
+  } catch (err) {
+    log(err)
+  } 
+})
+
 let createZip = 'creating zip from folder content'
 taker.task(createZip, cb => {
   start(createZip)
@@ -137,6 +160,7 @@ gulp.task('default', taker.series(
   rmJunk,
   createEnv,
   createZip,
-  cleanUp,
+  CheckDockerSupport,
+  // cleanUp,
   dune
 ))
