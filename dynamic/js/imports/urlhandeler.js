@@ -1,4 +1,4 @@
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 import {CreateMessage, OpenMessage} from '../components/message.js'
 
 const log = console.log

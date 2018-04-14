@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 import MDinput from '../components/md-input.js'
 import UserInfo from '../components/userinfo.js'
 
@@ -12,7 +12,9 @@ class Settings extends Component {
       LoginStatus: inputs.LoginStatus,
       sendingData: true,
       canChangeUser: this.getoptionsarr(inputs.LoginStatus),
-      users: []
+      users: [],
+      userIcon: './api/usericon.php',
+      userIconStats: 'normal'
     }
     this.onUserDataChange = inputs.onUserDataChange || (() => {})
     this.getUsers()
@@ -55,6 +57,45 @@ class Settings extends Component {
             <h2>Settings</h2>
             <div className="section userSection">
               <h3>User settings</h3>
+              <div className="provielPicture">
+                <div 
+                  className="actualProvielPicture" 
+                  style={{
+                    backgroundImage: `url(${this.state.userIcon})`, 
+                    border: '8px solid ' + ((this.state.userIconStats == 'normal') 
+                      ? '#ccc'
+                      : '#f7c203')
+                  }}
+                  onClick={() => 
+                    document.querySelector('.userProvielPicutureActions input').click()
+                  }
+                >
+                  <div>Click om een nieuwe proviel foto te kiezen</div>
+                </div>
+                <div className="actions userProvielPicutureActions">
+                  <input onChange={() => {
+                    let input = document.querySelector('.userProvielPicutureActions input')
+                    if (input.files && input.files[0]) {
+                      let reader = new FileReader()
+                      reader.onload = e => 
+                      this.setState({
+                        userIcon: e.target.result,
+                        userIconStats: 'working'
+                      })
+                      functions.fetch('/url/.json', 'json', (data) => {
+                      
+                      }, {
+                        cache: 'no-cache',
+                        method: 'POST',
+                        body: {
+                        
+                        }
+                      })
+                      reader.readAsDataURL(input.files[0])
+                    }
+                  }} type="file" accept=".jpg, .jpeg, .png"/>
+                </div>
+              </div>
               {this.state.canChangeUser.map((el, id) =>
                 <div className="row" key={id}>
                   <div className="error">{el.err}</div>

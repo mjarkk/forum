@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MDrefresh from 'react-icons/lib/md/refresh'
 import MDdelete from 'react-icons/lib/md/delete'
 import MDinput from '../components/md-input.js'
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 
 const log = console.log
 

@@ -2,7 +2,7 @@ import 'whatwg-fetch'
 
 const log = console.log
 
-export const functions = {
+let doc = {
   dateToString: (msg) =>
     msg.split('-').map((el, i) => 
       (i == 1) ? // check it the item is the time
@@ -97,3 +97,5 @@ export const functions = {
     // a fake function use to make a callback functions happy
   }
 }
+
+export default doc

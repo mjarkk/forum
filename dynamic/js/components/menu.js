@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MDsettings from 'react-icons/lib/md/settings'
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 
 const log = console.log
 

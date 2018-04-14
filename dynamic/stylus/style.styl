@@ -112,7 +112,7 @@ button
       white-space nowrap
       user-select none
       -webkit-touch-callout none
-      -webkit-user-select: none
+      -webkit-user-select none
       &:hover
         background-color #eee
       .itemTitle
@@ -441,7 +441,7 @@ button
   position fixed
   top 0px
   left 0px
-  display: flex
+  display flex
   justify-content center
   align-items center
   background-color Background
@@ -458,11 +458,11 @@ button
     width 100vw
     max-width 300px
     .progress
-      margin: 10px 20px
+      margin 10px 20px
       height 4px
-      background-color: BackgroundDark
+      background-color BackgroundDark
       div
-        background-color: Primary
+        background-color Primary
         height 4px
         transition 0.3s width
     .part
@@ -472,8 +472,8 @@ button
       flex-direction column
       .errorText
         color #F44336
-        padding: 10px 0px
-        font-weight: 600
+        padding 10px 0px
+        font-weight 600
       button
         margin-top 10px
       .accoundInf
@@ -516,7 +516,7 @@ button
           .item
             min-width 90px
             max-width 90px
-            overflow: hidden
+            overflow hidden
           .id
             min-width 25px
             max-width 25px
@@ -526,6 +526,45 @@ button
             background-color Background
           *
             font-weight bold
+      .error
+        color red
+        display inline-block
+        width 100%
+        top 1px
+        position relative
+      .provielPicture
+        padding 20px 0px
+        display flex
+        justify-content center
+        align-items center
+        .actualProvielPicture
+          width 150px
+          height 150px
+          border-radius 100%
+          background-color Background
+          box-sizing border-box
+          cursor pointer
+          overflow hidden
+          background-size cover
+          background-repeat no-repeat
+          background-position center
+          transition 0.3s border 
+          div
+            cursor pointer
+            display flex
+            justify-content center
+            align-items center
+            width 100%
+            height 100%
+            text-align center
+            background-color rgba(100%,100%,100%, 0.4)
+            opacity 0.2
+            transition 0.3s opacity 
+          &:hover
+            div
+              opacity 1
+        .actions
+          display none
       .row
         display flex
         justify-content space-between
@@ -535,8 +574,9 @@ button
         .name
           display flex
           justify-content center
-          align-items center
           font-size 19px
+          position relative
+          top 6px
         .ml-input-holder
           position relative
           top -10px
@@ -551,10 +591,10 @@ button
     background-color Background
     box-sizing border-box
     box-shadow Shadow4
-    overflow-x: hidden
-    overflow-y: scroll
-    font-size: 18px
-    font-weight: normal
+    overflow-x hidden
+    overflow-y scroll
+    font-size 18px
+    font-weight normal
     *
       color black
       line-height 1
@@ -564,11 +604,11 @@ button
     h2
       border-bottom 2px solid #ccc
       margin-bottom 8px
-      padding 0px 10px 5px 10px
+      padding 5px 10px 5px 10px
     h4
       padding 5px 10px 0px 10px
-      margin-top: 5px
-      border-top: 2px solid #ccc
+      margin-top 5px
+      border-top 2px solid #ccc
       text-align center
       width 100%
       display inline-block
@@ -631,5 +671,5 @@ button
       display flex
       justify-content center
       align-content center
-      padding: 0px 20px 20px 20px
+      padding 0px 20px 20px 20px
 

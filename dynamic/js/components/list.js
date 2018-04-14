@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Setup from '../components/setup.js'
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 import MDinput from '../components/md-input.js'
 import MDdelete from 'react-icons/lib/md/delete'
 import MDback from 'react-icons/lib/md/arrow-back'

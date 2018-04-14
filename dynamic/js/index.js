@@ -16,9 +16,6 @@ import Settings from './components/settings.js'
 // style imports
 import '../stylus/style.styl'
 
-// import tests
-import tests from './imports/tests.js'
-
 const log = console.log
 
 class App extends Component {

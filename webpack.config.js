@@ -29,9 +29,7 @@ let htmlTemplate = {
 
 module.exports = {
   entry: {
-    // only include the tests.js when it's needed
-    bundel: './dynamic/js/index.js',
-    tests: './dynamic/js/tests.js'
+    bundel: './dynamic/js/index.js'
   },
   output: {
     filename: 'js/[hash].[name].js',

@@ -4,7 +4,7 @@ import MDcomment from 'react-icons/lib/md/comment'
 import MDshare from 'react-icons/lib/md/share'
 import MDdelete from 'react-icons/lib/md/delete'
 import MDinput from '../components/md-input.js'
-import {functions} from '../imports/functions.js'
+import functions from '../imports/functions.js'
 import urlHandeler from '../imports/urlhandeler.js'
 import Popup from '../components/popup.js'
 import UserInfo from '../components/userinfo.js'
@@ -226,7 +226,7 @@ class Message extends Component {
       , 3000)
     } else {
       // if it's not open check after 7 seconds again
-      setTimeout(this.CheckUpdate, 7000)
+      setTimeout(() => this.CheckUpdate(), 7000)
     }
   }
   fetchMsg(id, callback) {
