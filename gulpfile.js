@@ -80,12 +80,10 @@ taker.task(rmJunk, cb => {
 let createEnv = 'creating original env.php file'
 taker.task(createEnv, cb => {
   start(createEnv)
-  fs.outputFile('./release/api/env.php', `
-    <?php
-    $env = array(
-      'SQLusername' => '','SQLpassword' => '','SQLserver' => '','SQLdatabaseName' => ''
-    );
-  `, err => 
+  fs.outputFile('./release/api/env.php', `<?php
+$env = array(
+  'SQLusername' => '','SQLpassword' => '','SQLserver' => '','SQLdatabaseName' => ''
+);`, err => 
     report(createEnv, err, cb)
   )
 })

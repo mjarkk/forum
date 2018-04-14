@@ -20,7 +20,7 @@ services:
         volumes:
             - ./release:/var/html
     db:
-        image: mariadb
+        build: ./docker/mariadb/.
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: rootpassword
