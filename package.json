@@ -8,8 +8,7 @@
   "scripts": {
     "build": "webpack --progress --display=minimal --config \"webpack.config.js\"",
     "dev": "webpack --watch --display=minimal --config \"webpack.config.js\"",
-    "test": "ava test.js --color",
-    "funtest": "ava test.js --tap | tap-nyan"
+    "release": "gulp"
   },
   "ava": {
     "babel": {
