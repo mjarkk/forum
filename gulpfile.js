@@ -159,6 +159,6 @@ gulp.task('default', taker.series(
   createEnv,
   createZip,
   CheckDockerSupport,
-  // cleanUp,
+  cleanUp,
   dune
 ))
