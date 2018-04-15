@@ -5,6 +5,7 @@ build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).
 ## Webserver Setup
 - go to: [/releases](https://github.com/mjarkk/forum/releases)
 - Download the latest version and copy the fils to the webserver
+- Make sure to chmod `666` or `777` all files to ensure file premissions
 
 ## Setup Dev
 - Install [node.js](https://nodejs.org/en/)
@@ -20,6 +21,7 @@ location ~ (\.env) {
 ```  
 - Or in case of an apache server move the .htaccess to the root of your webserver
 - Make a softlink from `build` to you'r webserver or just copy the folder after the build has completed
+- Make sure to chmod `666` or `777` all files to ensure file premissions
 
 ## Tests
 Currently I have no goal with the test file  
