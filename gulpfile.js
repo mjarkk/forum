@@ -73,7 +73,11 @@ let rmJunk = 'removing junk and all kinds of other files'
 taker.task(rmJunk, cb => {
   start(rmJunk)
   fs.remove('./release/api/.env', err => 
-    report(rmJunk, err, cb)
+    (err) 
+      ? report(rmJunk, err, cb)
+      : fs.remove('./release/icons/users', err => 
+          report(rmJunk, err, cb)
+        )
   )
 })
 
@@ -85,6 +89,14 @@ $env = array(
   'SQLusername' => '','SQLpassword' => '','SQLserver' => '','SQLdatabaseName' => ''
 );`, err => 
     report(createEnv, err, cb)
+  )
+})
+
+let createUserIconsFolder = 'Create user icon folder'
+taker.task(createUserIconsFolder, cb => {
+  start(createUserIconsFolder)
+  fs.ensureDir('./release/icons/users', err => 
+    report(createUserIconsFolder, err, cb)
   )
 })
 
@@ -157,8 +169,9 @@ gulp.task('default', taker.series(
   copy,
   rmJunk,
   createEnv,
+  createUserIconsFolder,
   createZip,
-  CheckDockerSupport,
+  // CheckDockerSupport, // <- at the moment i don't have any plans to do things with docker
   cleanUp,
   dune
 ))
