@@ -9,7 +9,7 @@ build with [React](https://reactjs.org/) and [PHP](http://www.php.net/).
 
 ## Setup Dev
 - Install [node.js](https://nodejs.org/en/)
-- `npm i -g webpack webpack-cli yarn` (on linux and macOS you might need to add `sudo`)
+- `npm i -g webpack webpack-cli yarn` (on **linux** and **macOS** you might need to add `sudo`)
 - `yarn`
 - `yarn dev` (this will start a live reload server and watches the files)
 - Add a SQL database 
